@@ -169,7 +169,7 @@
                   <h3>Tất cả</h3>
                 </div>
                 <div class="row gy-5" id="allProduct">
-                    @foreach ($foods as $food)
+                    @foreach ($foodList as $food)
                    
                         <div class="col-lg-3 menu-item">
                           <a href="" class="glightbox"><img src="{{asset("assets".$food->images)}}" class="menu-img img-fluid" alt=""></a>
@@ -197,7 +197,7 @@
                 </div>
     
                 <div class="row gy-5">
-                @foreach ($foods as $food)
+                @foreach ($foodList as $food)
                    
                         @if ($food->menu_id == "menu01")
                             <div class="col-lg-3 menu-item">
@@ -227,7 +227,7 @@
     
                 <div class="row gy-5">
     
-                @foreach ($foods as $food)
+                @foreach ($foodList as $food)
                    
                         @if ($food->menu_id == "menu01")
                             <div class="col-lg-3 menu-item">
@@ -258,7 +258,7 @@
     
                 <div class="row gy-5">
     
-                @foreach ($foods as $food)
+                @foreach ($foodList as $food)
                    
                         @if ($food->menu_id == "menu03")
                             <div class="col-lg-3 menu-item">

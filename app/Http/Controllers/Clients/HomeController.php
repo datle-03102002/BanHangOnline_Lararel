@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\Clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Foods;
 
 class HomeController extends Controller
 {
     //
+    private $foods;
+    function __construct() {
+         $this->foods=  new Foods();
+    }
     public function index(){
-        $foods = DB::select('select * from foods');
-        return view("Clients.home",compact('foods'));
+        $foodList = $this->foods->getAllFood();
+        return view("Clients.home",compact('foodList'));
     }
     public function search(Request $request){
-        $search = $request->input('txtKeyword');
-        $data = DB::select('select * from foods where name=:name', [
-            "name" => $search
-        ])::paginate(5);
-        dd($data);
-        return view("Clients.home",['data'=>$data]);
+        $search = $request->txtKeyword;
+        // $foodSearch = $this->foods->getFoodByName($search);
+        // dd($foodSearch);
+        $foodSearch= Foods::where('name','like','%'.$search.'%')->get();
+        dd($foodSearch);
+        return view("Clients.home",['foodSearch'=>$foodSearch]);
     }
 }
