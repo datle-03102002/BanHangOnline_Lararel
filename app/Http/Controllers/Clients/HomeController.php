@@ -37,6 +37,22 @@ class HomeController extends Controller
         
         // return view("Admin.Category.Index");
     }
+    public function login(){
+        return view("Clients.Login");
+    }
+    public function postlogin(Request $request){
+        $validate = $request->validate([
+            'username'=>'required',
+            'password'=>'requied'
+        ],[
+            'username.required'=>'Tên đăng nhập không được để trống',
+            'password.required'=>'Mật khẩu không được để trống',
+        ]);
+        
+    }
+    public function register(){
+        return view("Clients.Register");
+    }
     public function search(Request $request){
         $search = $request->txtKeyword;
         // $foodSearch = $this->foods->getFoodByName($search);

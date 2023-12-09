@@ -30,7 +30,10 @@
 @section('content')
     <div class="product" style="min-height: 800px">
         <div class="container">
-            <p class="product-heading mt-0 py-3 fs-5 fw-semibold">{{ $tt->tenhangsp }} {{ $sl->soluong }}</p>
+            <p class="product-heading mt-0 py-3 fs-5 fw-semibold">
+                {{ !empty($tt->tenhangsp) ? $tt->tenhangsp : 'Tất cả sản phẩm ' }}
+
+                {{ !empty($sl->soluong) ? '(' . $sl->soluong . ' sản phẩm)' : '' }}</p>
             <div class="products-list row">
                 @foreach ($products as $item)
                     <div class="col-lg-3 col-md-6 mb-4">
@@ -81,7 +84,7 @@
                 @endforeach
             </div>
             <ul class="pagination justify-content-center">
-
+                {{ $products->links() }}
                 {{-- phân trang --}}
 
             </ul>

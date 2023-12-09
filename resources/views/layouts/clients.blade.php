@@ -15,10 +15,6 @@
 
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/index.js') }}"></script>
-    <?php
-    session_start();
-    // include("main.php");
-    ?>
 </head>
 
 <body>
@@ -27,7 +23,8 @@
             <div class="container text-center header-top">
                 <div class="row">
                     <div class="col-3">
-                        <a href="index.php" class=""><img src="img/logo.png" class="img-fluid" alt=""></a>
+                        <a href="{{ route('trangchu') }}" class=""><img src="{{ asset('assets/imgs/logo.png') }}"
+                                class="img-fluid" alt=""></a>
                     </div>
                     <div class="col-5 d-flex align-items-center">
                         <form class="d-flex w-100" role="search"
