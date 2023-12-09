@@ -3,18 +3,39 @@
 namespace App\Http\Controllers\Clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Foods;
+use App\Models\Products;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     //
-    private $foods;
+    protected $table;
     function __construct() {
-         $this->foods=  new Foods();
+         $this->table=  new Products();
     }
-    public function index(){
-        $foodList = $this->foods->getAllFood();
-        return view("Clients.home",compact('foodList'));
+    public function index($hang_id=null){
+        $mucgia = DB::table('tbl_mucgia')->get();
+        $hangsp = DB::table('tbl_hangsp')->get();
+        if($hang_id == null ){
+            $products = $this->table->getAllProduct();
+            return view("Clients.home",compact('products','hangsp','mucgia'));
+        }
+        else{
+            $products = $this->table->getProductByHangID($hang_id);
+            $sl = DB::table('tbl_sanpham')
+            ->select(DB::raw('count(ma_sp) as soluong'))
+            ->where('id_hangsp', '=', $hang_id)
+            ->groupBy('id_hangsp')
+            ->first();
+            $tt = DB::table('tbl_hangsp')
+            ->select("tenhangsp")
+            ->where('id_hangsp','=',$hang_id)
+            ->first();
+            // dd($sl);
+            return view("Clients.home",compact('products','hangsp','mucgia','sl','tt'));
+        }
+        
+        // return view("Admin.Category.Index");
     }
     public function search(Request $request){
         $search = $request->txtKeyword;
