@@ -27,10 +27,8 @@
                                 class="img-fluid" alt=""></a>
                     </div>
                     <div class="col-5 d-flex align-items-center">
-                        <form class="d-flex w-100" role="search"
-                            action="index.php?navigate=timkiem <?php if (isset($_GET['tukhoa'])) {
-                                echo $_GET['tukhoa'];
-                            } ?>" method="POST">
+                        <form class="d-flex w-100" role="search" action="{{ route('search') }}" method="POST">
+                            @csrf
                             <input class="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm..."
                                 name="tukhoa" aria-label="Nhập từ khóa tìm kiếm...">
                             <button class="btn btn-primary" type="submit" name="timkiemsp"><i
@@ -102,33 +100,31 @@
                             <div class="col-7">
                                 <div class="row h-100 align-items-center g-0">
                                     <div class="col-12">
-                                        {{-- <?php
-                                if (!isset($_SESSION['login'])) {
-                                    ?>
-                                    <a href="user/login.php" class="link-underline link-underline-opacity-0 col-6">Đăng
-                                        nhập</a>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <div class="dropdown">
-                                        <button class="btn noborder dropdown-toggle text-primary" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"><?php
-                                            $sql = 'SELECT * FROM tbl_dangky WHERE id_khachhang = ' . $_SESSION['login'] . '';
-                                            $row = mysqli_query($connect, $sql);
-                                            $row_data = mysqli_fetch_array($row);
-                                            
-                                            echo $row_data['hoten'];
-                                            ?></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="index.php?navigate=thongtin">Thông tin</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="index.php?navigate=dangxuat">Đăng xuất</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <?php
-                                }
-                                ?> --}}
+                                        @if (empty(Session::get('user')))
+                                            <a href="{{ route('client.login') }}"
+                                                class="link-underline link-underline-opacity-0 col-6">Đăng
+                                                nhập</a>
+                                        @else
+                                            <div class="dropdown">
+                                                <button class="btn noborder dropdown-toggle text-primary" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    @php
+                                                        $user = DB::table('users')
+                                                            ->WHERE('id_khachhang', '=', Session::get('user'))
+                                                            ->first();
+                                                    @endphp
+                                                    {{ $user->hoten }}
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('thongTinUser') }}">Thông tin</a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" href="{{ route('dangxuat') }}">Đăng
+                                                            xuất</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +151,8 @@
                                             <div class="list-group-container d-flex ">
                                                 <div class="list-product-by-brain">
                                                     <div class="list-group">
-                                                        <p class="list-product-content fw-bold">Điện thoại theo hãng</p>
+                                                        <p class="list-product-content fw-bold">Điện thoại theo hãng
+                                                        </p>
                                                         @foreach ($hangsp as $item)
                                                             <a href="{{ route('theohang', ['hang_id' => $item->id_hangsp]) }}"
                                                                 class="list-group-item list-group-item-action">

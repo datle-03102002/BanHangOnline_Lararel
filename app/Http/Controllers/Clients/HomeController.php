@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
     //
@@ -41,17 +42,30 @@ class HomeController extends Controller
         return view("Clients.Login");
     }
     public function postlogin(Request $request){
-        $validate = $request->validate([
-            'username'=>'required',
-            'password'=>'requied'
-        ],[
-            'username.required'=>'Tên đăng nhập không được để trống',
-            'password.required'=>'Mật khẩu không được để trống',
-        ]);
-        
+        $user= DB::table('users')
+        ->where("email","=",$request->email)
+        ->where("matkhau","=",$request->password)
+        ->first();
+        if(!empty($user)){
+            Session::put('user', $user->id_khachhang);
+            // dd(Session::get('user'));
+            return redirect()->intended('/');
+        }
+        return view("Clients.Register");  
     }
     public function register(){
         return view("Clients.Register");
+    }
+    public function logout(){
+        Session::pull('user');
+        return redirect()->intended('/');
+    }
+    public function information(){
+        $user  = DB::table('users')
+        ->where("id_khachhang","=",Session::get('user'))
+        -first();
+        return view("Clients.Thongtin",compact('user'));
+
     }
     public function search(Request $request){
         $search = $request->txtKeyword;

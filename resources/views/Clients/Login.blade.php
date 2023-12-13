@@ -15,11 +15,12 @@
 <body>
     <div class="wraper">
         <div class="form-box login">
-            <form action="" method="post">
+            <form action="{{ route('postlogin') }}" method="post">
                 <h2>Đăng nhập</h2>
+                @csrf
                 <div class="input-box">
                     <span class="icon"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" name="username" required>
+                    <input type="text" name="email" required>
                     <label for="">Tên đăng nhập</label>
                 </div>
                 <div class="input-box">

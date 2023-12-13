@@ -17,14 +17,16 @@ use Illuminate\Routing\Router;
 */
 Route::get('/',[HomeController::class,"index"])->name('trangchu');
 Route::get('login', [HomeController::class,"login"])->name('client.login');
-Route::post('login', [HomeController::class,"postlogin"])->name('client.postlogin');
+Route::post('login', [HomeController::class,"postlogin"])->name('postlogin');
 Route::get('register', [HomeController::class,"register"])->name('register');
+Route::get('dangxuat',[HomeController::class,"logout"] )->name('dangxuat');
+Route::get('thong-tin',[HomeController::class,"information"] )->name('thongTinUser');
 Route::get('product/{id}', [HomeController::class,"ShowProduct"])->name('showpro');
 Route::middleware('clientlogin')->group(function () {
     Route::get('themgiohang/{id}', [HomeController::class,"themgiohang"])->name('themgiohang');
 });
 Route::get('theohang/{hang_id?}', [HomeController::class,"index"])->name('theohang');
-Route::get('/search',[HomeController::class,"search"]);
+Route::post('/search',[HomeController::class,"search"])->name('search');
 
 
 // router admin
