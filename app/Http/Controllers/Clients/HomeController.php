@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\HangSP;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Session;
@@ -12,17 +13,17 @@ class HomeController extends Controller
     //
     protected $table;
     function __construct() {
-         $this->table=  new Products();
+         
     }
     public function index($hang_id=null){
         $mucgia = DB::table('tbl_mucgia')->get();
         $hangsp = DB::table('tbl_hangsp')->get();
         if($hang_id == null ){
-            $products = $this->table->getAllProduct();
+            $products = DB::table('tbl_sanpham')->paginate(12);
             return view("Clients.home",compact('products','hangsp','mucgia'));
         }
         else{
-            $products = $this->table->getProductByHangID($hang_id);
+            $products =DB::table('tbl_sanpham')->where("id_hangsp","=",$id)->paginate(12);
             $sl = DB::table('tbl_sanpham')
             ->select(DB::raw('count(ma_sp) as soluong'))
             ->where('id_hangsp', '=', $hang_id)
@@ -54,6 +55,10 @@ class HomeController extends Controller
         return view("Clients.Register");  
     }
     public function register(){
+        return view("Clients.Register");
+    }
+    public function postRegister(){
+
         return view("Clients.Register");
     }
     public function logout(){

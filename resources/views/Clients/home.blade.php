@@ -28,7 +28,7 @@
     </div>
 @endsection
 @section('content')
-    <div class="product" style="min-height: 800px">
+    <div class="product" style="min-height: 800px" data-aos="fade-up">
         <div class="container">
             <p class="product-heading mt-0 py-3 fs-5 fw-semibold">
                 {{ !empty($tt->tenhangsp) ? $tt->tenhangsp : 'Tất cả sản phẩm ' }}
@@ -41,8 +41,6 @@
                             <div class="product-img position-relative">
                                 <img class="card-img-top rounded-0" alt="..." style="object-fit:contain"
                                     src="{{ asset('assets/uploads/' . $item->hinhanh) }}" alt="">
-
-
                             </div>
                             <div class="card-body text-center pt-0">
                                 <div class="product-info">
@@ -55,8 +53,10 @@
                                             class="text-danger h4 mb-3 d-block fw-semibold">{{ number_format($item->gia, 0, ',', '.') . 'đ' }}</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="{{ route('themgiohang', ['id' => $item->id_sp]) }}"
-                                            class="btn btn-primary btn-sm m-1">Thêm vào giỏ hàng</a><br>
+
+                                        <a href="{{ route('themgiohang', ['id' => $item->id_sp, 'sl' => 1]) }}"
+                                            class="btn btn-primary btn-sm m-1">Thêm vào giỏ hàng
+                                        </a><br>
                                         <a href="{{ route('showpro', ['id' => $item->id_sp]) }}"
                                             class='btn btn-secondary btn-sm m-1'>Xem chi tiết</a>
                                     </div>
@@ -92,3 +92,30 @@
         </div>
     </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+<script>
+    function AddToCart(event) {
+        event.preventDefault();
+        let urlCart = $(this).data('url');
+        $.ajax({
+            type: 'GET',
+            url: urlCart,
+            dataType: 'json',
+            success: function(data) {
+                if (data.code === 200) {
+                    alert('thanh cong');
+                }
+            },
+            error: function() {
+
+            },
+        });
+
+    }
+    $(function() {
+        $('.add-to-cart').on('click', AddToCart);
+    });
+</script>

@@ -16,11 +16,11 @@ class LoginClient
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        if(Session::get('user')){
             return view('Clients.home');
         }
         else{
-            return redirect()->route('Clients.Login');
+            return redirect()->route('client.login');
         }
     }
 }

@@ -52,20 +52,12 @@
                                 <div class="row h-100 align-items-center">
                                     <div class="col-6">
                                         <div class="cart-block">
-                                            <a href="index.php?navigate=giohang"
+                                            <a href="{{ route('client.giohang') }}"
                                                 class="link-underline link-underline-opacity-0 d-block mt-2">
                                                 <i class="fa-solid fa-cart-shopping w-100 fs-4"></i>
-                                                {{-- <?php
-                                        if (isset($_SESSION['carts']) && count($_SESSION['carts']) > 0) {
-                                            ?>
-                                            <div class="cart-quantity">
-                                                <?php
-                                                echo count($_SESSION['carts']);
-                                                ?>
-                                            </div>
-                                            <?php
-                                        }
-                                    ?> --}}
+                                                @php
+
+                                                @endphp
                                             </a>
                                         </div>
                                     </div>
@@ -133,7 +125,7 @@
                 </div>
             </div>
             {{-- menu --}}
-            <div class="bg-primary-subtle header-bot">
+            <div class="bg-primary-subtle header-bot" data-aos="fade-up">
                 <div class="container">
                     <nav class="navbar navbar-expand p-0">
                         <div class="container-fluid">
@@ -331,5 +323,10 @@
         <script src="{{ asset('assets/js/main.js') }}"></script>
         </div>
 </body>
+@php
+    session()->forget('cart');
+    session()->pull('cart');
+    dd(session()->get('cart'));
+@endphp
 
 </html>

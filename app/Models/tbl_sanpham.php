@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Products extends Model
+class tbl_sanpham extends Model
 {
     use HasFactory;
     public function getAllProduct(){
@@ -14,6 +14,6 @@ class Products extends Model
     }
     // hàm lấy tất cả các sản phẩm theo hãng
     public function getProductByHangID($id){
-        return DB::table('tbl_sanpham')->where("id_hangsp","=",$id)->paginate(12);
+        
     }
 }

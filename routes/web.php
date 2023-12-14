@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Clients\HomeController;
+use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Routing\Router;
 /*
@@ -22,11 +23,13 @@ Route::get('register', [HomeController::class,"register"])->name('register');
 Route::get('dangxuat',[HomeController::class,"logout"] )->name('dangxuat');
 Route::get('thong-tin',[HomeController::class,"information"] )->name('thongTinUser');
 Route::get('product/{id}', [HomeController::class,"ShowProduct"])->name('showpro');
-Route::middleware('clientlogin')->group(function () {
-    Route::get('themgiohang/{id}', [HomeController::class,"themgiohang"])->name('themgiohang');
-});
+Route::get('giohang',[CartController::class,'index'])->name('client.giohang');
+Route::get('themgiohang/{id}/{sl}', [CartController::class,"themgiohang"])->name('themgiohang');
+Route::post('postthemgiohang/{id}/{sl}', [CartController::class,"postthemgiohang"])->name('postthemgiohang');
+
 Route::get('theohang/{hang_id?}', [HomeController::class,"index"])->name('theohang');
 Route::post('/search',[HomeController::class,"search"])->name('search');
+
 
 
 // router admin
