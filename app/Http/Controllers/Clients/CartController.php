@@ -12,8 +12,7 @@ class CartController extends Controller
 {
     //
     public function index(){
-        $mucgia = DB::table('tbl_mucgia')->get();
-        $hangsp = DB::table('tbl_hangsp')->get();
+        
         return view("Clients.cart",compact('hangsp','mucgia'));
     }
     public function themgiohang($id,$sl=1){
