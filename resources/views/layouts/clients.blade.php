@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Cửa hàng bán đồ ăn</title>
     <link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -12,6 +13,7 @@
     <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/products.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
 
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/index.js') }}"></script>
@@ -23,15 +25,14 @@
             <div class="container text-center header-top">
                 <div class="row">
                     <div class="col-3">
-                        <a href="{{ route('trangchu') }}" class=""><img src="{{ asset('assets/imgs/logo.png') }}"
-                                class="img-fluid" alt=""></a>
+                        <a href="{{ route('trangchu') }}" class=""><img
+                                src="{{ asset('assets/imgs/logo.png') }}" class="img-fluid" alt=""></a>
                     </div>
                     <div class="col-5 d-flex align-items-center">
-                        <form class="d-flex w-100" role="search" action="{{ route('search') }}" method="POST">
-                            @csrf
+                        <form class="d-flex w-100" role="search" action="{{ route('search') }}" method="GET">
                             <input class="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm..."
                                 name="tukhoa" aria-label="Nhập từ khóa tìm kiếm...">
-                            <button class="btn btn-primary" type="submit" name="timkiemsp"><i
+                            <button class="btn btn-primary" type="submit"><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
                     </div>
@@ -55,9 +56,14 @@
                                             <a href="{{ route('client.giohang') }}"
                                                 class="link-underline link-underline-opacity-0 d-block mt-2">
                                                 <i class="fa-solid fa-cart-shopping w-100 fs-4"></i>
-                                                @php
+                                                <div class="cart-quantity">
+                                                    @if (Session::has('cart'))
+                                                        {{ count(Session::get('cart')) }}
+                                                    @else
+                                                        0
+                                                    @endif
+                                                </div>
 
-                                                @endphp
                                             </a>
                                         </div>
                                     </div>
@@ -125,7 +131,7 @@
                 </div>
             </div>
             {{-- menu --}}
-            <div class="bg-primary-subtle header-bot" data-aos="fade-up">
+            <div class="bg-primary-subtle header-bot">
                 <div class="container">
                     <nav class="navbar navbar-expand p-0">
                         <div class="container-fluid">
@@ -312,21 +318,17 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
-        </script>
-        <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-        <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-
-        <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-        <script src="{{ asset('assets/js/main.js') }}"></script>
         </div>
 </body>
-@php
-    session()->forget('cart');
-    session()->pull('cart');
-    dd(session()->get('cart'));
-@endphp
 
 </html>
+@yield('script')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+</script>
+<script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>

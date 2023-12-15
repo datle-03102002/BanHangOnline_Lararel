@@ -23,12 +23,16 @@ Route::get('register', [HomeController::class,"register"])->name('register');
 Route::get('dangxuat',[HomeController::class,"logout"] )->name('dangxuat');
 Route::get('thong-tin',[HomeController::class,"information"] )->name('thongTinUser');
 Route::get('product/{id}', [HomeController::class,"ShowProduct"])->name('showpro');
+
+// Route giỏ hàng
 Route::get('giohang',[CartController::class,'index'])->name('client.giohang');
 Route::get('themgiohang/{id}/{sl}', [CartController::class,"themgiohang"])->name('themgiohang');
 Route::post('postthemgiohang/{id}/{sl}', [CartController::class,"postthemgiohang"])->name('postthemgiohang');
+Route::get('updateCart/{action}/{id}', [CartController::class,"update"])->name('updateCart');
+Route::get('deleteItem/{id}', [CartController::class,"deleteItemInCart"])->name('deleteItem');
 
 Route::get('theohang/{hang_id?}', [HomeController::class,"index"])->name('theohang');
-Route::post('/search',[HomeController::class,"search"])->name('search');
+Route::get('/search',[HomeController::class,"search"])->name('search');
 
 
 

@@ -12,8 +12,5 @@ class tbl_sanpham extends Model
     public function getAllProduct(){
         return DB::table('tbl_sanpham')->paginate(12);
     }
-    // hàm lấy tất cả các sản phẩm theo hãng
-    public function getProductByHangID($id){
-        
-    }
+    // hàm lấy tất cả các sản phẩm theo hãn
 }

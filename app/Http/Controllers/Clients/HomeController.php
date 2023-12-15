@@ -19,11 +19,11 @@ class HomeController extends Controller
         $mucgia = DB::table('tbl_mucgia')->get();
         $hangsp = DB::table('tbl_hangsp')->get();
         if($hang_id == null ){
-            $products = DB::table('tbl_sanpham')->paginate(12);
+            $products = DB::table('tbl_sanpham')->paginate(20);
             return view("Clients.home",compact('products','hangsp','mucgia'));
         }
         else{
-            $products =DB::table('tbl_sanpham')->where("id_hangsp","=",$id)->paginate(12);
+            $products =DB::table('tbl_sanpham')->where("id_hangsp","=",$id)->paginate(20);
             $sl = DB::table('tbl_sanpham')
             ->select(DB::raw('count(ma_sp) as soluong'))
             ->where('id_hangsp', '=', $hang_id)
@@ -58,7 +58,6 @@ class HomeController extends Controller
         return view("Clients.Register");
     }
     public function postRegister(){
-
         return view("Clients.Register");
     }
     public function logout(){
@@ -73,11 +72,25 @@ class HomeController extends Controller
 
     }
     public function search(Request $request){
-        $search = $request->txtKeyword;
-        // $foodSearch = $this->foods->getFoodByName($search);
-        // dd($foodSearch);
-        $foodSearch= Foods::where('name','like','%'.$search.'%')->get();
-        dd($foodSearch);
-        return view("Clients.home",['foodSearch'=>$foodSearch]);
+        $mucgia = DB::table('tbl_mucgia')->get();
+        $hangsp = DB::table('tbl_hangsp')->get();
+        $search = $request->tukhoa;
+        $productList = DB::table('tbl_sanpham')
+        ->where("ten_sp","like",'%'.$search.'%')
+        ->paginate(20);
+        $count = $productList->count();
+        // dd($productList);
+        return view("Clients.search",compact('search','count','productList','hangsp','mucgia'));
+    }
+    public function ShowProduct(Request $request){
+        $id = $request->id;
+        $product = DB::table('tbl_sanpham')
+        ->join('tbl_hangsp', 'tbl_sanpham.id_hangsp', '=', 'tbl_hangsp.id_hangsp')
+        ->where("id_sp","=",$id)
+        ->first();
+        $mucgia = DB::table('tbl_mucgia')->get();
+        $hangsp = DB::table('tbl_hangsp')->get();
+        return view("Clients.DetailProduct",compact('product','hangsp','mucgia'));
+
     }
 }

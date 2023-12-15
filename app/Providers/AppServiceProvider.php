@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $mucgia = DB::table('tbl_mucgia')->get();
+        $hangsp = DB::table('tbl_hangsp')->get();
         Paginator::useBootstrap();
     }
 }

@@ -12,25 +12,14 @@ class CartController extends Controller
 {
     //
     public function index(){
-        return view("Clients.cart");
+        $mucgia = DB::table('tbl_mucgia')->get();
+        $hangsp = DB::table('tbl_hangsp')->get();
+        return view("Clients.cart",compact('hangsp','mucgia'));
     }
-    public function themgiohang($id,$sl){
+    public function themgiohang($id,$sl=1){
         $product =DB::table('tbl_sanpham')
         ->where("id_sp","=",$id)
         ->first();
-        // // dd(Session::get("cart",[]));
-        // $cart = Session::get("giohang",[]);
-        // if(isset($cart[$id])){
-        //     $cart[$id]['soluong'] ++;
-        // }
-        // else{
-        //     $cart[$id]= [
-        //         'ten'=>$product->ten_sp,
-        //         'gia'=>$product->gia,
-        //         'hinhanh'=>$product->hinhanh,
-        //         'soluong'=>1
-        //     ];
-        // }
         $cart = Session::get('cart', []);
 
         if (!array_key_exists($id, $cart)) {
@@ -38,19 +27,42 @@ class CartController extends Controller
                 'ten'=>$product->ten_sp,
                 'gia'=>$product->gia,
                 'hinhanh'=>$product->hinhanh,
-                'soluong'=>1
+                'soluong'=>$sl,
+                'rom'=>$product->rom,
+                'ram'=>$product->ram,
             ];
         } else {
-            $cart[$id]['soluong'] ++;
+            $cart[$id]['soluong'] +=$sl;
 
         }
         // dd($cart);
         Session::put('cart', $cart);
-        
          return redirect()->back();
     }
-
-        
-        // Session::put('giohang',$cart);
+    public function update(Request $request){
+        dd("update");
+        $cart = Session::get('cart',[]);
+        $id = $request->id;
+        $action = $request->action;
+        if($action=='giamsl'){
+            if($cart[$id]['soluong']>1){
+                $cart[$id]['soluong']--;
+            }
+            else{
+                unset($cart[$id]);
+            }
+        }
+        else{
+            $cart[$id]['soluong']++;
+        }
+         Session::put('cart', $cart);
+        return response()->json(['code' => 200, 'mes' => 'update công']);
+    }
+    public function deleteItemInCart(Request $request){
+        $cart = Session::get('cart',[]);
+        unset($cart[$request->id]);
+        Session::put('cart', $cart);
+        return response()->json(['code' => 200, 'mes' => 'xóa thành công']);
+    }
     
 }
