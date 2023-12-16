@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Clients\OrderController;
+use App\Http\Controllers\Clients\UserController;
 use Illuminate\Routing\Router;
 /*
 |--------------------------------------------------------------------------
@@ -16,23 +18,32 @@ use Illuminate\Routing\Router;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('theohang/{hang_id?}', [HomeController::class,"index"])->name('theohang');
+Route::get('/search',[HomeController::class,"search"])->name('search');
 Route::get('/',[HomeController::class,"index"])->name('trangchu');
-Route::get('login', [HomeController::class,"login"])->name('client.login');
-Route::post('login', [HomeController::class,"postlogin"])->name('postlogin');
-Route::get('register', [HomeController::class,"register"])->name('register');
-Route::get('dangxuat',[HomeController::class,"logout"] )->name('dangxuat');
-Route::get('thong-tin',[HomeController::class,"information"] )->name('thongTinUser');
+Route::get('login', [UserController::class,"login"])->name('client.login');
+Route::post('login', [UserController::class,"postlogin"])->name('postlogin');
+Route::get('register', [UserController::class,"register"])->name('register');
+Route::post('register', [UserController::class,"postregister"])->name('postregister');
+Route::get('dangxuat',[UserController::class,"logout"] )->name('dangxuat');
+Route::get('thong-tin',[UserController::class,"information"] )->name('thongTinUser');
 Route::get('product/{id}', [HomeController::class,"ShowProduct"])->name('showpro');
 
 // Route giỏ hàng
-Route::get('giohang',[CartController::class,'index'])->name('client.giohang');
-Route::get('themgiohang/{id}/{sl}', [CartController::class,"themgiohang"])->name('themgiohang');
-Route::post('postthemgiohang/{id}/{sl}', [CartController::class,"postthemgiohang"])->name('postthemgiohang');
-Route::get('updateCart/{action}/{id}', [CartController::class,"update"])->name('updateCart');
-Route::get('deleteItem/{id}', [CartController::class,"deleteItemInCart"])->name('deleteItem');
-
-Route::get('theohang/{hang_id?}', [HomeController::class,"index"])->name('theohang');
-Route::get('/search',[HomeController::class,"search"])->name('search');
+Route::get('/giohang',[CartController::class,'index'])->name('client.giohang');
+Route::get('/themgiohang/{id}/{sl}', [CartController::class,"themgiohang"])->name('themgiohang');
+Route::get('/update/{action}/{id}', [CartController::class,"update"])->name('update');
+Route::get('/deleteItem/{id}', [CartController::class,"deleteItemInCart"])->name('deleteItem');
+Route::middleware(['clientlogin'])->group(function () {
+    Route::get('xemdonhang', [OrderController::class,"index"])->name('xemdonhang');
+    Route::get('dathang', [OrderController::class,"dathang"])->name('dathang');
+    Route::post('dathang', [OrderController::class,"postdathang"])->name('postdathang');
+    Route::get('chitietdh/{id}', [OrderController::class,"chitiet"])->name('chitietdh');
+    Route::get('suadonhang/{id}', [OrderController::class,"sua"])->name('suadonhang');
+    Route::post('suadonhang/{id}', [OrderController::class,"postsua"])->name('postsua');
+    Route::get('huydonhang/{id}', [OrderController::class,"huy"])->name('huydonhang');
+    Route::get('danhandonhang/{id}', [OrderController::class,"danhan"])->name('danhandonhang');
+});
 
 
 

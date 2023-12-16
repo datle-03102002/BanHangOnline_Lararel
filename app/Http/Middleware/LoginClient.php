@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
+use Session;
 
 class LoginClient
 {
@@ -16,11 +17,10 @@ class LoginClient
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Session::get('user')){
-            return view('Clients.home');
+        if(Session::has('user')){
+            return $next($request);
         }
-        else{
-            return redirect()->route('client.login');
-        }
+        return redirect()->route('client.login');
+        
     }
 }

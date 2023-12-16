@@ -12,10 +12,12 @@ class CartController extends Controller
 {
     //
     public function index(){
-        
+        $mucgia = DB::table('tbl_mucgia')->get();
+        $hangsp = DB::table('tbl_hangsp')->get();
         return view("Clients.cart",compact('hangsp','mucgia'));
     }
     public function themgiohang($id,$sl=1){
+        // dd($sl);
         $product =DB::table('tbl_sanpham')
         ->where("id_sp","=",$id)
         ->first();
@@ -34,34 +36,51 @@ class CartController extends Controller
             $cart[$id]['soluong'] +=$sl;
 
         }
+        
         // dd($cart);
         Session::put('cart', $cart);
-         return redirect()->back();
+        return response()->json(['code' => 200, 'mes' => 'Đã thêm vào giỏ hàng','count'=>count(Session::get('cart'))]);
+
     }
     public function update(Request $request){
-        dd("update");
         $cart = Session::get('cart',[]);
         $id = $request->id;
         $action = $request->action;
-        if($action=='giamsl'){
-            if($cart[$id]['soluong']>1){
-                $cart[$id]['soluong']--;
+        
+            if($action=='giamsl'){
+                if($cart[$id]['soluong']>1){
+                    $cart[$id]['soluong']--;
+                }
+                else{
+                    unset($cart[$id]);
+                }
             }
             else{
-                unset($cart[$id]);
+                $cart[$id]['soluong']++;
             }
-        }
-        else{
-            $cart[$id]['soluong']++;
-        }
-         Session::put('cart', $cart);
-        return response()->json(['code' => 200, 'mes' => 'update công']);
+            $tong =0 ;
+            foreach ($cart as $item) {
+                $tong +=$item['soluong']*$item['gia'];
+            }
+            $soluongmoi =0;
+            $gia =0;
+            if(isset($cart[$id])){
+                $soluongmoi = $cart[$id]['soluong'];
+                $gia =$cart[$id]['gia'];
+            }
+            Session::put('cart', $cart);
+
+            return response()->json(['code' => 200, 'soluong'=>$soluongmoi,'tong'=>$tong,'gia'=>$gia,'count'=>count(Session::get('cart'))]);    
     }
     public function deleteItemInCart(Request $request){
         $cart = Session::get('cart',[]);
         unset($cart[$request->id]);
+        $tong =0 ;
+        foreach ($cart as $item) {
+            $tong +=$item['soluong']*$item['gia'];
+        }
         Session::put('cart', $cart);
-        return response()->json(['code' => 200, 'mes' => 'xóa thành công']);
+        return response()->json(['code' => 200, 'mes' => 'xóa thành công','tong'=>$tong,'count'=>count(Session::get('cart'))]);
     }
     
 }

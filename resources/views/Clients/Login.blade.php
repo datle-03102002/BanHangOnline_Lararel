@@ -17,10 +17,13 @@
         <div class="form-box login">
             <form action="{{ route('postlogin') }}" method="post">
                 <h2>Đăng nhập</h2>
+                @if (Session::has('error'))
+                    <h4>{{ Session::get('error') }}</h4>
+                @endif
                 @csrf
                 <div class="input-box">
                     <span class="icon"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" name="email" required>
+                    <input type="text" name="email" required value="{{ old('email') }}">
                     <label for="">Tên đăng nhập</label>
                 </div>
                 <div class="input-box">

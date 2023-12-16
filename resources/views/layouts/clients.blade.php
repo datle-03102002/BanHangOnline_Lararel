@@ -5,15 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Cửa hàng bán đồ ăn</title>
+    <title>Cửa hàng bán Điện thoại</title>
     <link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/products.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/oder.css') }}">
 
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/index.js') }}"></script>
@@ -69,27 +71,14 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="cart-block">
-                                            <a href="index.php?navigate=xemdonhang"
+                                            <a href="{{ route('xemdonhang') }}"
                                                 class="link-underline link-underline-opacity-0 d-block mt-2">
                                                 <i class="fa-solid fa-truck w-100 fs-4"></i>
-                                                {{-- <?php
-                                        if (isset($_SESSION['login'])) {
-                                            $sql_cart = "SELECT COUNT(*) FROM tbl_cart WHERE id_khachhang = ".$_SESSION['login']."";
-                                            $query_cart = mysqli_query($connect, $sql_cart);
-                                            $cart_quantity = mysqli_fetch_array($query_cart)[0];
-                                            if ($cart_quantity > 0) {
-                                                ?>
-
-                                            <div class="cart-quantity" style="right:5px;top:2px;">
-                                                <?php
-                                                echo $cart_quantity;
-                                                ?>
-                                            </div>
-                                            <?php
-                                            }
-                                        }
-                                    
-                                    ?> --}}
+                                                @if (Session::has('user'))
+                                                    <div class="cart-quantity" style="right:5px;top:2px;">
+                                                        {{-- {{ $cart_quantity }} --}}
+                                                    </div>
+                                                @endif
                                             </a>
                                         </div>
                                     </div>
@@ -100,8 +89,12 @@
                                     <div class="col-12">
                                         @if (empty(Session::get('user')))
                                             <a href="{{ route('client.login') }}"
-                                                class="link-underline link-underline-opacity-0 col-6">Đăng
-                                                nhập</a>
+                                                class="link-underline link-underline-opacity-0 col-6">Đăng nhập
+                                            </a>
+                                            <span>/ </span>
+                                            <a href="{{ route('register') }}"
+                                                class="link-underline link-underline-opacity-0 col-6">Đăng ký
+                                            </a>
                                         @else
                                             <div class="dropdown">
                                                 <button class="btn noborder dropdown-toggle text-primary" type="button"
@@ -211,114 +204,95 @@
                 </div>
             </div>
 
-            {{-- <div class="modal-notify <?php if (isset($_SESSION['thongbao']) && $_SESSION['thongbao'] != '') {
-                echo 'show';
-            } ?>"> --}}
-            {{-- <div class="notify">
+        </div>
+        <div class="modal-notify {{ Session::has('thongbao') ? 'show' : '' }}">
+            <div class="notify">
                 <div class="notify-header">
                     <p class="fs-5 fw-semibold mb-0">
                         Thông báo
                     </p>
                 </div>
-                <div class="content">
+                <div class="content notify-content">
                     <p class="fs-6 fw-semibold mb-0 text-center notify-contents px-4">
-                        {{-- <?php
-                        
-                        if ($_SESSION['thongbao'] == 'hethang') {
-                            echo 'Không thể thêm<br>Sản phẩm này đã hết hàng !';
-                            unset($_SESSION['thongbao']);
-                        } elseif ($_SESSION['thongbao'] == 'dathangok') {
-                            echo 'Đặt hàng thành công !';
-                            unset($_SESSION['thongbao']);
-                        } elseif ($_SESSION['thongbao'] == 'suadhok') {
-                            echo 'Đã cập nhật đơn hàng !';
-                            unset($_SESSION['thongbao']);
-                        } elseif ($_SESSION['thongbao'] == 'nhandh') {
-                            echo 'Nhận hàng thành công !<br> Cảm ơn bạn đã mua hàng !';
-                            unset($_SESSION['thongbao']);
-                        } elseif ($_SESSION['thongbao'] == 'huydh') {
-                            echo 'Đã hủy đơn hàng !';
-                            unset($_SESSION['thongbao']);
-                        } elseif ($_SESSION['thongbao'] == 'themgiohangthanhcong') {
-                            echo 'Thêm giỏ hàng thành công!';
-                            unset($_SESSION['thongbao']);
-                        }
-                        ?></p> --}}
+                        {{ session('thongbao') }}
+                    </p>
+                </div>
+                <div class="action">
+                    <button id="btnhiden" onclick="notify()" class="btn btn-primary w-25">OK</button>
+                </div>
+            </div>
         </div>
-        {{-- <div class="action">
-            <button id="btnhiden" class="btn btn-primary w-25">OK</button>
-        </div> --}}
+
+
+        @yield('slider')
+
+
+        @yield('content')
+        <footer id="footer" class="footer">
+
+            <div class="container">
+                <div class="row gy-3">
+                    <div class="col-lg-3 col-md-6 d-flex">
+                        <i class="bi bi-geo-alt icon"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>
+                                A108 Adam Street <br>
+                                New York, NY 535022 - US<br>
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links d-flex">
+                        <i class="bi bi-telephone icon"></i>
+                        <div>
+                            <h4>Reservations</h4>
+                            <p>
+                                <strong>Phone:</strong> +1 5589 55488 55<br>
+                                <strong>Email:</strong> info@example.com<br>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links d-flex">
+                        <i class="bi bi-clock icon"></i>
+                        <div>
+                            <h4>Opening Hours</h4>
+                            <p>
+                                <strong>Mon-Sat: 11AM</strong> - 23PM<br>
+                                Sunday: Closed
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Follow Us</h4>
+                        <div class="social-links d-flex">
+                            <a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="fa-brands fa-square-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Yummy</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
+                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+            </div>
+
     </div>
-    </div>
-    @yield('slider')
-
-
-    @yield('content')
-    <footer id="footer" class="footer">
-
-        <div class="container">
-            <div class="row gy-3">
-                <div class="col-lg-3 col-md-6 d-flex">
-                    <i class="bi bi-geo-alt icon"></i>
-                    <div>
-                        <h4>Address</h4>
-                        <p>
-                            A108 Adam Street <br>
-                            New York, NY 535022 - US<br>
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links d-flex">
-                    <i class="bi bi-telephone icon"></i>
-                    <div>
-                        <h4>Reservations</h4>
-                        <p>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links d-flex">
-                    <i class="bi bi-clock icon"></i>
-                    <div>
-                        <h4>Opening Hours</h4>
-                        <p>
-                            <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                            Sunday: Closed
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Follow Us</h4>
-                    <div class="social-links d-flex">
-                        <a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="fa-brands fa-square-instagram"></i></a>
-                        <a href="#" class="linkedin"><i class="fa-brands fa-linkedin"></i></a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="copyright">
-                &copy; Copyright <strong><span>Yummy</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </div>
-
-        </div>
 </body>
 
 </html>
@@ -332,3 +306,124 @@
 
 <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> --}}
+<script>
+    function notify() {
+        let model = document.querySelector(".modal-notify");
+        model.classList.remove('show');
+    }
+
+    function updateCart() {
+        event.preventDefault();
+        let urlCart = $(this).data('url');
+        let id = $(this).data('id');
+        // alert(urlCart);
+        $.ajax({
+            type: "GET",
+            url: urlCart,
+            success: function(data) {
+                if (data.code == 200) {
+                    if (data.soluong >= 1) {
+                        $(".quantity").val(data.soluong);
+                        let totalItem = Intl.NumberFormat('vi-VN', {
+                            style: 'decimal',
+                            currency: 'VND'
+                        }).format(Number(data.gia) * Number(data.soluong));
+                        $(".total-item-" + id).html(totalItem + " đ");
+                        $(".total").html(Intl.NumberFormat('vi-VN', {
+                            style: 'decimal',
+                            currency: 'VND'
+                        }).format(data.tong))
+                    } else {
+                        // alert("xóa");
+                        $('.item-' + id).remove();
+                        $(".total").html(Intl.NumberFormat('vi-VN', {
+                            style: 'decimal',
+                            currency: 'VND'
+                        }).format(data.tong));
+                        $(".cart-quantity").html(data.count);
+                    }
+                    if (data.count == 0) {
+                        $(".khongcohang").show();
+                        $(".cohang").remove();
+                        $('.dathang').prop('disabled', true);
+                    }
+
+                }
+            },
+            error: function() {
+
+            }
+        });
+    }
+
+    function deleteItem(event) {
+        event.preventDefault();
+        let urlCart = $(this).data('url');
+        let name = $(this).data('name');
+        let id = $(this).data('id');
+        if (confirm("Bạn có muốn xóa sản phẩm " + name + " ?")) {
+            $.ajax({
+                type: "GET",
+                url: urlCart,
+                success: function(data) {
+                    if (data.code == 200) {
+                        $('.item-' + id).remove();
+                        $(".total").html(Intl.NumberFormat('vi-VN', {
+                            style: 'decimal',
+                            currency: 'VND'
+                        }).format(data.tong));
+                        alert(data.count);
+                        if (data.count == 0) {
+                            $(".khongcohang").show();
+                            $(".cohang").remove();
+                            $('.dathang').prop('disabled', true);
+                        }
+                    }
+                },
+                error: function() {
+
+                }
+            });
+        }
+    }
+
+    function addToCart(event) {
+        event.preventDefault();
+        let urlCart = "/themgiohang/";
+        let id = $(this).data("id");
+        let soluong = $(".soluong-sp-input").val();
+        if (soluong == undefined) {
+            soluong = 1;
+        }
+        console.log(soluong);
+        $.ajax({
+            type: "GET",
+            url: urlCart + id + "/" + soluong,
+            success: function(data) {
+                if (data.code == 200) {
+                    // $('.item-' + id).remove();
+                    $(".cart-quantity").html(data.count);
+                    $(".notify-content").html(data.mes);
+                    $(".modal-notify").addClass('show');
+                    // alert(data.mes);
+                }
+            },
+            error: function() {
+
+            }
+        })
+    }
+    $(function() {
+        $('.add-to-cart').on('click', addToCart);
+    })
+    $(function() {
+        $('.updateCart').on('click', updateCart);
+    });
+    $(function() {
+        $('.deleteItem').on('click', deleteItem);
+    })
+</script>
