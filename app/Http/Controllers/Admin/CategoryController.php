@@ -4,28 +4,44 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Categories;
 use Illuminate\Support\Facades\DB;
-
-
 
 class CategoryController extends Controller
 {
-    //
-    private $category;
-    function __construct() {
-         $this->category=  new Categories();
-    }
+    
     public function index(){
-        $categoryList = $this->category->getAllCategory();
-        return view("Admin.Category.Index",compact("categoryList"));
+        $ds = DB::table('tbl_hangsp')->get();
+        $dsg = DB::table('tbl_mucgia')->get();
+        return view("Admin.category", compact('ds', 'dsg'));
     }
-    public function edit(Request $request){
-        $id = $request->id;
-        $menu = DB::table('menu')->where("menu_id",$id)->first();
-        return view("Admin.Category.Edit",compact('menu'));
-    }
-    public function postedit(){
 
+    public function delete($id){
+        $hang = DB::table('tbl_hangsp')->where('id_hangsp', '=', $id)->delete();
+        $ds = DB::table('tbl_hangsp')->get();
+        $dsg = DB::table('tbl_mucgia')->get();
+        return view("Admin.category", compact('ds', 'dsg'));
+    }
+    
+    public function add(){
+        return redirect()->route('category.index');
+    }
+    public function postadd(Request $request){
+        $ten = $request->input('tenhangsp');
+        $stt = $request->input('thutusp');
+        DB::table('tbl_hangsp')->insert([
+            'tenhangsp' => $ten,
+            'stt' => $stt,
+        ]);
+        return redirect()->route('category.index');
+    }
+
+    public function addprice(){
+        return redirect()->route('Admin.index');
+    }
+    public function postaddprice(Request $request){
+        $gia = $request->input('mucgia');
+        DB::table('tbl_mucgia')->insert([
+            'mucgia' => $gia,
+        ]);
     }
 }

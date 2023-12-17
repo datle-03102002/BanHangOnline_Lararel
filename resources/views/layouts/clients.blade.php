@@ -252,8 +252,8 @@
     </div>
     @yield('slider')
 
-
     @yield('content')
+    
     <footer id="footer" class="footer">
 
         <div class="container">

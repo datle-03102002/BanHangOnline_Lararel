@@ -53,7 +53,7 @@
                                             class="text-danger h4 mb-3 d-block fw-semibold">{{ number_format($item->gia, 0, ',', '.') . 'đ' }}</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="{{ route('themgiohang', ['id' => $item->id_sp, 'sl' => 1]) }}"
+                                        <a href="{{ route('themgiohang', C }}"
                                             class="btn btn-primary btn-sm m-1">Thêm vào giỏ hàng
                                         </a><br>
                                         <a href="{{ route('showpro', ['id' => $item->id_sp]) }}"

@@ -65,7 +65,7 @@ class HomeController extends Controller
         return redirect()->intended('/');
     }
     public function information(){
-        $user  = DB::table('users')
+        $user  = DB::table('user')
         ->where("id_khachhang","=",Session::get('user'))
         -first();
         return view("Clients.Thongtin",compact('user'));
