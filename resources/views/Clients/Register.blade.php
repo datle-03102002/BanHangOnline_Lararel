@@ -14,12 +14,20 @@
 <body>
     <div class="wraper register">
         <div class="form-box register">
-            <form action="" method="post">
+            <form action="{{ route('postregister') }}" method="post">
+                @csrf
                 <h2>Đăng ký</h2>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
                     <input type="email" name="email" required>
                     <label for="">Email</label>
+                    @error('email.email')
+                        <span class="alert alert-danger">{{ $message }}</span>
+                    @enderror
+                    @error('email.unique')
+                        <span class="alert alert-danger">{{ $message }}</span>
+                    @enderror
+
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="call"></ion-icon></ion-icon></span>
@@ -30,16 +38,25 @@
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
                     <input type="text" name="fullname" required>
                     <label for="">Tên đầy đủ</label>
+                    @error('fullname')
+                        <span class="alert alert-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                     <input type="password" name="password" required>
                     <label for="">Mật khẩu</label>
+                    @error('password.min')
+                        <span class="alert alert-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                     <input type="password" name="repassword" required>
                     <label for="">Xác nhận mật khẩu</label>
+                    @error('re_password.same')
+                        <span class="alert alert-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="home"></ion-icon></span>

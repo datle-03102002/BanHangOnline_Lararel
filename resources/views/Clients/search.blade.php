@@ -15,15 +15,17 @@
                             <div class="card-body text-center">
                                 <div class="product-info">
                                     <div class="card-content">
-                                        <h5 class="card-title mb-0 w-75 mx-auto"><a {{-- href="index.php?navigate=show_pro&id_sp=<?php echo $id_sp; ?>" --}}
+                                        <h5 class="card-title mb-0 w-75 mx-auto"><a
+                                                href="{{ route('showpro', ['id' => $item->id_sp]) }}"
                                                 class="text-dark text-decoration-none fw-semibold">{{ $item->ten_sp }}</a>
                                         </h5>
                                         <span
                                             class="text-danger h4 mb-3 d-block fw-semibold">{{ number_format($item->gia, 0, ',', '.') . 'đ' }}</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="{{ route('themgiohang', ['id' => $item->id_sp, 'sl' => 1]) }}"
-                                            class="btn btn-primary btn-sm m-1">Thêm vào giỏ hàng</a><br>
+                                        <a href="#" data-id="{{ $item->id_sp }}"
+                                            class="btn btn-primary btn-sm m-1 add-to-cart">Thêm vào giỏ
+                                            hàng</a><br>
                                         <a href="{{ route('showpro', ['id' => $item->id_sp]) }}"
                                             class='btn btn-secondary btn-sm m-1'>Xem chi tiết</a>
                                     </div>

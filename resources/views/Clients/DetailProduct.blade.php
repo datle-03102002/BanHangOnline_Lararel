@@ -89,35 +89,14 @@
         var demMins = document.querySelector('.soluong-sp-dem-icon .fa-minus');
 
         demPlus.addEventListener('click', function() {
+            // console.log("Before increment:", soluong.value);
             soluong.value = Number(soluong.value) + 1;
+            // console.log("After increment:", soluong.value);
+            // soluong.value = Number(soluong.value) + 1;
         });
 
         demMins.addEventListener('click', function() {
-
             soluong.value = Number(soluong.value) - 1;
         });
-
-        function addToCart() {
-            let urlCart = "themgiohang/";
-            let id = $(this).data("id");
-            let soluong = document.querySelector('.soluong-sp-input').value;
-            // alert(urlCart + id + "/" + soluong);
-            $.ajax({
-                type: "GET",
-                url: urlCart + id + "/" + soluong,
-                success: function(data) {
-                    if (data.code == 200) {
-                        // $('.item-' + id).remove();
-                        alert(data.mes);
-                    }
-                },
-                error: function() {
-
-                }
-            })
-        }
-        $(function() {
-            $('.add-to-cart').on('click', addToCart);
-        })
     </script>
 @endsection

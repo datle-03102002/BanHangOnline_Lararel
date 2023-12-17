@@ -1,5 +1,7 @@
 @extends('layouts.clients')
-<!--Slider-->
+@section('style')
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+@endsection
 @section('slider')
     <div class="container">
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -31,7 +33,7 @@
     <div class="product" style="min-height: 800px" data-aos="fade-up">
         <div class="container">
             <p class="product-heading mt-0 py-3 fs-5 fw-semibold">
-                {{ !empty($tt->tenhangsp) ? $tt->tenhangsp : 'Tất cả sản phẩm ' }}
+                {{ $tt }}
 
                 {{ !empty($sl->soluong) ? '(' . $sl->soluong . ' sản phẩm)' : '' }}</p>
             <div class="products-list row">
@@ -53,8 +55,13 @@
                                             class="text-danger h4 mb-3 d-block fw-semibold">{{ number_format($item->gia, 0, ',', '.') . 'đ' }}</span>
                                     </div>
                                     <div class="product-actions">
+<<<<<<< HEAD
                                         <a href="{{ route('themgiohang', C }}"
                                             class="btn btn-primary btn-sm m-1">Thêm vào giỏ hàng
+=======
+                                        <a href="#" data-id="{{ $item->id_sp }}"
+                                            class="btn btn-primary btn-sm m-1 add-to-cart">Thêm vào giỏ hàng
+>>>>>>> c3da2cfb44b3f2e98b8e93381a28d15efb444321
                                         </a><br>
                                         <a href="{{ route('showpro', ['id' => $item->id_sp]) }}"
                                             class='btn btn-secondary btn-sm m-1'>Xem chi tiết</a>
@@ -91,7 +98,3 @@
         </div>
     </div>
 @endsection
-
-
-{{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script> --}}
