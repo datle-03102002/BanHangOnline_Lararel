@@ -1,4 +1,7 @@
-@extends('layouts.clients');
+@extends('layouts.clients')
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
+@endsection
 @section('content')
     <div class="cart">
         <div class="container mb-5 cohang" style="height: 800px">

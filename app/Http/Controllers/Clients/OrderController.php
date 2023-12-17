@@ -5,36 +5,32 @@ namespace App\Http\Controllers\Clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session;
+use Mail;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    public function cart_quantity(){
+        return DB::table('tbl_cart')
+            ->where('id_khachhang','=',Session::get('user'))
+            ->count();
+    }
     public function index(){
-
-    
-    if (!Session::has('user')) {
-        return redirect()->route('client.login');
-    }
-    else{
-        $donhang = DB::table('tbl_cart')
-        ->join('users','users.id_khachhang','=','tbl_cart.id_khachhang')
-        ->where('tbl_cart.id_khachhang','=',Session::get('user'))
-        ->orderBy('tbl_cart.ngaydat')
-        ->get();
-        return view("Clients.xemdonhang",compact('donhang'));
-    }
-    
-    $sql_cart =
-        "SELECT * FROM tbl_cart
-                    INNER JOIN tbl_dangky ON tbl_cart.id_khachhang = tbl_dangky.id_khachhang
-                    WHERE tbl_cart.id_khachhang = " .
-        $_SESSION['login'] .
-        ' ORDER BY tbl_cart.ngaydat DESC';
-    $query_cart = mysqli_query($connect, $sql_cart);
-    
-
+        $cart_quantity = $this->cart_quantity();
+        if (!Session::has('user')) {
+            return redirect()->route('client.login');
+        }
+        else{
+            $donhang = DB::table('tbl_cart')
+            ->join('users','users.id_khachhang','=','tbl_cart.id_khachhang')
+            ->where('tbl_cart.id_khachhang','=',Session::get('user'))
+            ->orderBy('tbl_cart.ngaydat')
+            ->get();
+            return view("Clients.xemdonhang",compact('donhang','cart_quantity'));
+        }
     }
     public function dathang(){
+        $cart_quantity = $this->cart_quantity();
         $id_user = Session::get('user');
         $cart = Session::get('cart',[]);
         $tong =0;
@@ -44,8 +40,7 @@ class OrderController extends Controller
         $user = DB::table('users')
         ->where("id_khachhang","=",$id_user)
         ->first();
-        // dd($user);
-        return view("Clients.dathang",compact('user','cart','tong'));
+        return view("Clients.dathang",compact('user','cart','tong','cart_quantity'));
     }
     public function postdathang(Request $request){
         $id_kh = Session::get('user');
@@ -55,6 +50,7 @@ class OrderController extends Controller
         $trangthai = 1;
         $thanhtoan = $request->httt;
         $currentDay = date('Y-m-d');
+        $fullDate = date('Y-m-d H-m-i');
         $code_cart = rand(0,9999);
         DB::table('tbl_cart')->insert([
             'id_khachhang'=>$id_kh,
@@ -66,17 +62,22 @@ class OrderController extends Controller
             'thanhtoan'=>$thanhtoan,
             'trangthai'=>$trangthai
         ]);
-        foreach (Session::get('cart') as $key => $item) {
+        $cart = Session::get('cart',[]);
+        foreach ($cart as $key => $item) {
             DB::table('tbl_cart_info')->insert([
                 'code_cart'=>$code_cart,
                 'id_sp'=>$key,
                 'sl'=>$item['soluong']
             ]);
         };
+        Mail::send('Mails.mail', compact('tenn','sdt','dc','fullDate','cart'), function ($message) {
+            $message->to('duyductc2k2@gmail.com','đạt lê');
+        });
         Session::forget('cart');
         return redirect()->route('chitietdh',['id'=>$code_cart])->with('thongbao','Đã đặt hàng');
     }
     public function chitiet(Request $request){
+        $cart_quantity = $this->cart_quantity();
         $code_cart = $request->id;
         $dataCart = DB::table('tbl_cart')
         ->join('users','tbl_cart.id_khachhang','=','users.id_khachhang')
@@ -91,7 +92,7 @@ class OrderController extends Controller
         foreach ($dataSP as $key => $item) {
             $tong +=$item->gia* $item->sl;
         }
-        return view('Clients.chitietdh',compact('dataCart','dataSP','code_cart','tong'));
+        return view('Clients.chitietdh',compact('dataCart','dataSP','code_cart','tong','cart_quantity'));
     }
     public function huy(Request $request){
         $code_cart = $request->id;
@@ -104,6 +105,7 @@ class OrderController extends Controller
         return redirect()->route('xemdonhang')->with('thongbao','Đã xóa đơn hàng');
     }
     public function sua(Request $request){
+        $cart_quantity = $this->cart_quantity();
         $code_cart = $request->id;
         $id_kh = Session::get('user');
         $donhang = DB::table('tbl_cart')
@@ -111,7 +113,7 @@ class OrderController extends Controller
         ->where('tbl_cart.id_khachhang','=',$id_kh)
         ->where('tbl_cart.code_cart','=',$code_cart)
         ->first();
-        return view('Clients.suadonhang',compact('donhang','code_cart'));
+        return view('Clients.suadonhang',compact('donhang','code_cart','cart_quantity'));
     }
     public function postsua(Request $request){
         $code_cart = $request->id;

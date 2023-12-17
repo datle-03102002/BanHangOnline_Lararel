@@ -1,4 +1,7 @@
 @extends('layouts.clients')
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/oder.css') }}">
+@endsection
 @section('content')
     <div class="dathang">
         <form action="{{ route('postdathang') }}" method="POST">
@@ -8,7 +11,8 @@
                 <div class="dathang-infor">
                     <div class="mb-3">
                         <label for="hoten" class="form-label">Người nhận</label>
-                        <input type="text" class="form-control" id="hoten" name="hoten" value="{{ $user->hoten }}">
+                        <input type="text" class="form-control" id="hoten" name="hoten"
+                            value="{{ $user->hoten }}">
                     </div>
                     <div class="mb-3">
                         <label for="sdt" class="form-label">Số điện thoại</label>

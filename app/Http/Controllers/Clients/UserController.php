@@ -10,6 +10,11 @@ use Session;
 
 class UserController extends Controller
 {
+    public function cart_quantity(){
+        return DB::table('tbl_cart')
+            ->where('id_khachhang','=',Session::get('user'))
+            ->count();
+    }
     public function login(){
         return view("Clients.Login");
     }
@@ -64,10 +69,41 @@ class UserController extends Controller
         return redirect()->intended('/');
     }
     public function information(){
+        $cart_quantity = $this->cart_quantity();  
         $user  = DB::table('users')
         ->where("id_khachhang","=",Session::get('user'))
-        -first();
-        return view("Clients.Thongtin",compact('user'));
-
+        ->first();
+        // dd($user);
+        return view("Clients.User",compact('user','cart_quantity'));
     }
+    public function update(){
+        $cart_quantity = $this->cart_quantity();  
+        $user  = DB::table('users')
+        ->where("id_khachhang","=",Session::get('user'))
+        ->first();
+        // dd($user);
+        return view("Clients.suaThongTin",compact('user','cart_quantity'));
+    }
+    public function postUpdate(Request $request){
+        $id = Session::get('user');
+        $ten = $request->hoten;
+        $email = $request->email;
+        $sdt = $request->sdt;
+        $diachi = $request->diachi;
+        $check=DB::table('users')
+        ->where('id_khachhang','=',$id)
+        ->update([
+            'hoten'=>$ten,
+            'email'=>$email,
+            'sodienthoai'=>$sdt,
+            'diachi'=>$diachi
+        ]);
+        // dd($check);
+        $user  = DB::table('users')
+        ->where("id_khachhang","=",Session::get('user'))
+        ->first();
+        $cart_quantity = $this->cart_quantity();  
+        return redirect()->route("updateTT");
+    }
+
 }

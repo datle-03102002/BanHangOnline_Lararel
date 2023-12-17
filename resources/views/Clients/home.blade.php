@@ -1,5 +1,7 @@
 @extends('layouts.clients')
-<!--Slider-->
+@section('style')
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+@endsection
 @section('slider')
     <div class="container">
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -31,7 +33,7 @@
     <div class="product" style="min-height: 800px" data-aos="fade-up">
         <div class="container">
             <p class="product-heading mt-0 py-3 fs-5 fw-semibold">
-                {{ !empty($tt->tenhangsp) ? $tt->tenhangsp : 'Tất cả sản phẩm ' }}
+                {{ $tt }}
 
                 {{ !empty($sl->soluong) ? '(' . $sl->soluong . ' sản phẩm)' : '' }}</p>
             <div class="products-list row">

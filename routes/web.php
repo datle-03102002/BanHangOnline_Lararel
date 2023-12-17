@@ -18,15 +18,21 @@ use Illuminate\Routing\Router;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('theohang/{hang_id?}', [HomeController::class,"index"])->name('theohang');
-Route::get('/search',[HomeController::class,"search"])->name('search');
 Route::get('/',[HomeController::class,"index"])->name('trangchu');
+Route::get('/search',[HomeController::class,"search"])->name('search');
+Route::get('theohang/{hang_id?}', [HomeController::class,"theohang"])->name('theohang');
+Route::get('theogia/{from?}/{to?}', [HomeController::class,"theogia"])->name('theogia');
+
+
+
 Route::get('login', [UserController::class,"login"])->name('client.login');
 Route::post('login', [UserController::class,"postlogin"])->name('postlogin');
 Route::get('register', [UserController::class,"register"])->name('register');
 Route::post('register', [UserController::class,"postregister"])->name('postregister');
 Route::get('dangxuat',[UserController::class,"logout"] )->name('dangxuat');
 Route::get('thong-tin',[UserController::class,"information"] )->name('thongTinUser');
+Route::get('sua-thong-tin',[UserController::class,"update"] )->name('updateTT');
+Route::post('sua-thong-tin',[UserController::class,"postUpdate"] )->name('postUpdate');
 Route::get('product/{id}', [HomeController::class,"ShowProduct"])->name('showpro');
 
 // Route giỏ hàng

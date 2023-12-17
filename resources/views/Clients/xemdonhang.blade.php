@@ -1,4 +1,7 @@
 @extends('layouts.clients')
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/oder.css') }}">
+@endsection
 @section('content')
     <div class="container mb-5">
         <p class="cart-heading mt-0 py-3 fs-5 fw-bold">Đơn hàng của bạn</p>

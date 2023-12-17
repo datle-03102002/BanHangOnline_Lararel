@@ -21,13 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if(Session::has('user')){
-            $cart_quantity = DB::table('tbl_cart')
-            ->where('id_khachhang','=',Session::get('user'))
-            ->count();
-            view()->share(compact('cart_quantity'));
-            // dd($cart_quantity);
-        }
+
+        // Share cart_quantity
+        // view()->share('cart_quantity', $cart_quantity);
         $mucgia = DB::table('tbl_mucgia')->get();
         $hangsp = DB::table('tbl_hangsp')->get();
         Paginator::useBootstrap();

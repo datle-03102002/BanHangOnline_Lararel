@@ -8,17 +8,12 @@
     <title>Cửa hàng bán Điện thoại</title>
     <link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/products.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/oder.css') }}">
+    @yield('style')
 
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/js/index.js') }}"></script>
 </head>
 
 <body>
@@ -27,8 +22,8 @@
             <div class="container text-center header-top">
                 <div class="row">
                     <div class="col-3">
-                        <a href="{{ route('trangchu') }}" class=""><img
-                                src="{{ asset('assets/imgs/logo.png') }}" class="img-fluid" alt=""></a>
+                        <a href="{{ route('trangchu') }}" class=""><img src="{{ asset('assets/imgs/logo.png') }}"
+                                class="img-fluid" alt=""></a>
                     </div>
                     <div class="col-5 d-flex align-items-center">
                         <form class="d-flex w-100" role="search" action="{{ route('search') }}" method="GET">
@@ -69,19 +64,21 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="cart-block">
-                                            <a href="{{ route('xemdonhang') }}"
-                                                class="link-underline link-underline-opacity-0 d-block mt-2">
-                                                <i class="fa-solid fa-truck w-100 fs-4"></i>
-                                                @if (Session::has('user'))
+                                    @if (Session::has('user'))
+                                        <div class="col-6">
+                                            <div class="cart-block">
+                                                <a href="{{ route('xemdonhang') }}"
+                                                    class="link-underline link-underline-opacity-0 d-block mt-2">
+                                                    <i class="fa-solid fa-truck w-100 fs-4"></i>
+
                                                     <div class="cart-quantity" style="right:5px;top:2px;">
-                                                        {{-- {{ $cart_quantity }} --}}
+                                                        {{ $cart_quantity }}
                                                     </div>
-                                                @endif
-                                            </a>
+
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-7">
@@ -158,14 +155,17 @@
                                                         @foreach ($mucgia as $key => $item)
                                                             @if ($key == 0)
                                                                 <a class="list-group-item list-group-item-action"
-                                                                    href="">Dưới {{ $item->mucgia }}</a>
+                                                                    href="{{ route('theogia', ['from' => 0, 'to' => $mucgia[$key + 1]->mucgia]) }}">Dưới
+                                                                    {{ $mucgia[$key + 1]->mucgia }} triệu</a>
                                                             @elseif($key >= 1 && $key < $mucgia->count() - 1)
                                                                 <a class="list-group-item list-group-item-action"
-                                                                    href="">Từ {{ $item->mucgia }}
-                                                                    đến{{ $mucgia[$key + 1]->mucgia }}</a>
+                                                                    href="{{ route('theogia', ['from' => $item->mucgia, 'to' => $mucgia[$key + 1]->mucgia]) }}">Từ
+                                                                    {{ $item->mucgia }} triệu
+                                                                    đến {{ $mucgia[$key + 1]->mucgia }} triệu</a>
                                                             @else
                                                                 <a class="list-group-item list-group-item-action"
-                                                                    href=""> Trên{{ $item->mucgia }}</a>
+                                                                    href="{{ route('theogia', ['from' => $item->mucgia, 'to' => -1]) }}">
+                                                                    Trên {{ $item->mucgia }} triệu </a>
                                                             @endif
                                                         @endforeach
                                                     </div>
@@ -180,22 +180,23 @@
                                         </div>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="index.php">Trang chủ</a>
+                                        <a class="nav-link active" aria-current="page"
+                                            href="{{ route('trangchu') }}">Trang chủ</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php?navigate=gioithieu">Giới thiệu</a>
+                                        <a class="nav-link" href="{{ route('trangchu') }}">Giới thiệu</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php?navigate=tintuc">Tin tức</a>
+                                        <a class="nav-link" href="{{ route('trangchu') }}">Tin tức</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php?navigate=cauhoi">Câu hỏi thường gặp</a>
+                                        <a class="nav-link" href="{{ route('trangchu') }}">Câu hỏi thường gặp</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php?navigate=tuyendung">Tuyển dụng</a>
+                                        <a class="nav-link" href="{{ route('trangchu') }}">Tuyển dụng</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php?navigate=lienhe">Liên hệ</a>
+                                        <a class="nav-link" href="{{ route('trangchu') }}">Liên hệ</a>
                                     </li>
                                 </ul>
                             </div>
@@ -297,6 +298,7 @@
 
 </html>
 @yield('script')
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
 </script>

@@ -1,4 +1,7 @@
 @extends('layouts.clients')
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/oder.css') }}">
+@endsection
 @section('content')
     <div class="container mb-5" style="min-height:750px">
         <form class="w-40" action="{{ route('postsua', ['id' => $code_cart]) }}" method="POST">

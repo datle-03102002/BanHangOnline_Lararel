@@ -11,10 +11,16 @@ use Session;
 class CartController extends Controller
 {
     //
+    
+
+    public function cart_quantity(){
+        return DB::table('tbl_cart')
+            ->where('id_khachhang','=',Session::get('user'))
+            ->count();
+    }
     public function index(){
-        $mucgia = DB::table('tbl_mucgia')->get();
-        $hangsp = DB::table('tbl_hangsp')->get();
-        return view("Clients.cart",compact('hangsp','mucgia'));
+        $cart_quantity = $this->cart_quantity();
+        return view("Clients.cart",compact('cart_quantity'));
     }
     public function themgiohang($id,$sl=1){
         // dd($sl);
