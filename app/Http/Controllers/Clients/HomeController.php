@@ -70,8 +70,7 @@ class HomeController extends Controller
         }
         
         // return view("Admin.Category.Index");
-<<<<<<< HEAD
-    }
+    
     public function login(){
         return view("Clients.Login");
     }
@@ -104,9 +103,6 @@ class HomeController extends Controller
         return view("Clients.Thongtin",compact('user'));
 
     }
-=======
-    
->>>>>>> c3da2cfb44b3f2e98b8e93381a28d15efb444321
     public function search(Request $request){
         $cart_quantity = $this->cart_quantity();  
         $search = $request->tukhoa;
