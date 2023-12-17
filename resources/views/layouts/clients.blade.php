@@ -349,8 +349,8 @@
                         $(".cart-quantity").html(data.count);
                     }
                     if (data.count == 0) {
-                        $(".khongcohang").show();
-                        $(".cohang").remove();
+                        // $(".khongcohang").show();
+                        // $(".cohang").remove();
                         $('.dathang').prop('disabled', true);
                     }
 

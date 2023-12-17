@@ -16,19 +16,19 @@
                 <div class="information">
                     <div class="thongtinchitiet">
                         <label for="">Họ và tên: </label>
-                        <input name="hoten" value="{{ $user->hoten }}" />
+                        <input class="form-control-lg  " name="hoten" value="{{ $user->hoten }}" />
                     </div>
                     <div class="thongtinchitiet">
                         <label for="">Email: </label>
-                        <input name="email" value="{{ $user->email }}" />
+                        <input class="form-control-lg  " name="email" value="{{ $user->email }}" />
                     </div>
                     <div class="thongtinchitiet">
                         <label for="">Số điện thoại: </label>
-                        <input name="sdt" value="{{ $user->sodienthoai }}" />
+                        <input class="form-control-lg  " name="sdt" value="{{ $user->sodienthoai }}" />
                     </div>
                     <div class="thongtinchitiet">
                         <label for="">Địa chỉ: </label>
-                        <input name="diachi" value="{{ $user->diachi }}" />
+                        <input class="form-control-lg  " name="diachi" value="{{ $user->diachi }}" />
                     </div>
                 </div>
                 <div class="update">

@@ -103,7 +103,7 @@ class UserController extends Controller
         ->where("id_khachhang","=",Session::get('user'))
         ->first();
         $cart_quantity = $this->cart_quantity();  
-        return redirect()->route("updateTT");
+        return redirect()->route("thongTinUser");
     }
 
 }

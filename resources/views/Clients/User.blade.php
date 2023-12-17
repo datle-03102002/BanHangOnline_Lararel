@@ -7,25 +7,25 @@
         <div class="image">
             <img src="{{ asset('assets/imgs/logn.webp') }}" alt="">
         </div>
-        <div class="inforr">
-            <div class="infor-title">
+        <div class="inforr d-flex justify-content-center flex-column align-items-center ">
+            <div class="infor-title d-flex justify-content-center ">
                 <p>Hồ sơ của tôi</p>
             </div>
             <div class="information">
                 <div class="thongtinchitiet">
-                    <label for="">Họ và tên: </label>
+                    <label class="text-start " for="">Họ và tên: </label>
                     <span>{{ $user->hoten }}</span>
                 </div>
                 <div class="thongtinchitiet">
-                    <label for="">Email: </label>
+                    <label class="text-start " for="">Email: </label>
                     <span>{{ $user->email }}</span>
                 </div>
                 <div class="thongtinchitiet">
-                    <label for="">Số điện thoại: </label>
+                    <label class="text-start " for="">Số điện thoại: </label>
                     <span>{{ $user->sodienthoai }}</span>
                 </div>
                 <div class="thongtinchitiet">
-                    <label for="">Địa chỉ: </label>
+                    <label class="text-start " for="">Địa chỉ: </label>
                     <span>{{ $user->diachi }}</span>
                 </div>
             </div>
