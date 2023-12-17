@@ -70,8 +70,7 @@ class HomeController extends Controller
         }
         
         // return view("Admin.Category.Index");
-<<<<<<< HEAD
-    }
+    
     public function login(){
         return view("Clients.Login");
     }
@@ -100,20 +99,18 @@ class HomeController extends Controller
     public function information(){
         $user  = DB::table('user')
         ->where("id_khachhang","=",Session::get('user'))
-        -first();
+        ->first();
         return view("Clients.Thongtin",compact('user'));
 
     }
-=======
-    
->>>>>>> c3da2cfb44b3f2e98b8e93381a28d15efb444321
     public function search(Request $request){
         $cart_quantity = $this->cart_quantity();  
         $search = $request->tukhoa;
         $productList = DB::table('tbl_sanpham')
         ->where("ten_sp","like",'%'.$search.'%')
+        // ->get();
         ->paginate(20);
-        $count = $productList->count();
+        // $count = $productList->count();
         // dd($productList);
         return view("Clients.search",compact('search','count','productList','cart_quantity'));
     }

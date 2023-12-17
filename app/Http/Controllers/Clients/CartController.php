@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use Session;
+// use Session;
 
 class CartController extends Controller
 {
@@ -19,14 +19,9 @@ class CartController extends Controller
             ->count();
     }
     public function index(){
-<<<<<<< HEAD
         $mucgia = DB::table('tbl_mucgia')->get();
         $hangsp = DB::table('tbl_hangsp')->get();
         return view("Clients.cart",compact('hangsp','mucgia'));
-=======
-        $cart_quantity = $this->cart_quantity();
-        return view("Clients.cart",compact('cart_quantity'));
->>>>>>> c3da2cfb44b3f2e98b8e93381a28d15efb444321
     }
     public function themgiohang($id,$sl=1){
         // dd($sl);

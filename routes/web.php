@@ -3,18 +3,14 @@
 use App\Http\Controllers\Admin\BillController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\CartController;
-use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\HomeController1;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Clients\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CategoryController;
-<<<<<<< HEAD
 use App\Models\Categories;
-=======
-use App\Http\Controllers\Clients\OrderController;
-use App\Http\Controllers\Clients\UserController;
->>>>>>> c3da2cfb44b3f2e98b8e93381a28d15efb444321
 use Illuminate\Routing\Router;
 /*
 |--------------------------------------------------------------------------
