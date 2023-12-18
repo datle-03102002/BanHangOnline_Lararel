@@ -32,11 +32,8 @@ class HomeController extends Controller
         ->where('id_hangsp', '=', $hang_id)
         ->groupBy('id_hangsp')
         ->first();
-        $tt = DB::table('tbl_hangsp')
-        ->select("tenhangsp")
-        ->where('id_hangsp','=',$hang_id)
-        ->first();
-        // dd($sl);
+        // $tt = 
+        dd($products);
         return view("Clients.home",compact('products','sl','tt','cart_quantity'));
     }
     public function theogia($from=null,$to=null){
@@ -71,38 +68,6 @@ class HomeController extends Controller
         
         // return view("Admin.Category.Index");
     
-    public function login(){
-        return view("Clients.Login");
-    }
-    public function postlogin(Request $request){
-        $user= DB::table('users')
-        ->where("email","=",$request->email)
-        ->where("matkhau","=",$request->password)
-        ->first();
-        if(!empty($user)){
-            Session::put('user', $user->id_khachhang);
-            // dd(Session::get('user'));
-            return redirect()->intended('/');
-        }
-        return view("Clients.Register");  
-    }
-    public function register(){
-        return view("Clients.Register");
-    }
-    public function postRegister(){
-        return view("Clients.Register");
-    }
-    public function logout(){
-        Session::pull('user');
-        return redirect()->intended('/');
-    }
-    public function information(){
-        $user  = DB::table('user')
-        ->where("id_khachhang","=",Session::get('user'))
-        -first();
-        return view("Clients.Thongtin",compact('user'));
-
-    }
     public function search(Request $request){
         $cart_quantity = $this->cart_quantity();  
         $search = $request->tukhoa;
