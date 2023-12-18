@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {  
     public function index(){
-        $ds = DB::table('tbl_cart')->join('user', 'tbl_cart.id_khachhang','=', 'user.id_khachhang')->get();
+        $ds = DB::table('tbl_cart')->join('users', 'tbl_cart.id_khachhang','=', 'users.id_khachhang')->get();
         return view('Admin.order', compact('ds'));
     }
 }

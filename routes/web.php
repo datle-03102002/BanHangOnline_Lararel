@@ -4,9 +4,18 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\CartController;
+<<<<<<< HEAD
+use App\Http\Controllers\Admin\HomeController1;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Clients\UserController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Models\Categories;
+=======
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Clients\OrderController;
 use App\Http\Controllers\Clients\UserController;
+>>>>>>> 45c93956915980ec1b25cd9579e4d4e926144f72
 use Illuminate\Routing\Router;
 /*
 |--------------------------------------------------------------------------

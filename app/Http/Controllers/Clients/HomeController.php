@@ -73,8 +73,9 @@ class HomeController extends Controller
         $search = $request->tukhoa;
         $productList = DB::table('tbl_sanpham')
         ->where("ten_sp","like",'%'.$search.'%')
+        // ->get();
         ->paginate(20);
-        $count = $productList->count();
+        // $count = $productList->count();
         // dd($productList);
         return view("Clients.search",compact('search','count','productList','cart_quantity'));
     }
