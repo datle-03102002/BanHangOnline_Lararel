@@ -37,7 +37,7 @@
                                 <ul class="navbar-nav fs-6 nav-header">
                                     <li class="nav-item">
                                     
-                                        <a class="nav-link" href="{{ route('admin.index') }}">Trang chủ</a>
+                                        <a class="nav-link" href="{{ route('home.index') }}">Trang chủ</a>
                                     </li>
                                     <li class="nav-item" >
                                         <a class="nav-link" href="{{ route('category.index')}}">Quản lý danh mục</a>
@@ -65,7 +65,7 @@
 
         </div>
         
-        <script>
+        {{-- <script>
         const btnhiden = document.querySelector('#btnhiden');
         const modal = document.querySelector('.modal-notify');
         const notifyContent = document.querySelector('.notify');
@@ -81,7 +81,7 @@
         modal.addEventListener('click', function() {
             modal.classList.remove('show');
         })
-        </script>
+        </script> --}}
     </div>
 </body>
 </html>

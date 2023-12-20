@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session;
+// use Illuminate\Support\Facades\Session;
 use Mail;
 use Illuminate\Support\Facades\DB;
 
@@ -71,7 +72,7 @@ class OrderController extends Controller
             ]);
         };
         Mail::send('Mails.mail', compact('tenn','sdt','dc','fullDate','cart'), function ($message) {
-            $message->to('levanducdat2002@gmail.com','đạt lê');
+            $message->to('duyductc2k2@gmail.com','đạt lê');
         });
         Session::forget('cart');
         return redirect()->route('chitietdh',['id'=>$code_cart])->with('thongbao','Đã đặt hàng');

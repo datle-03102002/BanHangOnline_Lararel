@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
-
-class HomeController extends Controller
+use Session;
+class AdminHomeController extends Controller
 {
     function index()
     {
@@ -32,9 +32,24 @@ class HomeController extends Controller
         //đơn hàng hôm nay
         $dh_hn = DB::table('tbl_cart')->whereDate('ngaydat', '=', date('Y-m-d'))->count();
 
-        $tk = DB::table('user')->count();
+        $tk = DB::table('users')->count();
 
         return view("admin.index", compact('slsp', 'slhsp', 'slsptong', 'spdb', 'sl_dh_xl', 'sl_dh_dg', 'dh_hn', 'sl_dh_tc', 'tk'));
+    }
+    public function login(){
+        return view("Admin.Login");
+    }
+    public function postlogin(Request $request){
+        $admin= DB::table('tbl_admin')
+        ->where("ten","=",$request->ten)
+        ->where("matkhau","=",$request->password)
+        ->first();
+        if(!empty($admin)){
+            Session::put('admin', $admin->id_admin);
+            // dd(Session::get('user'));
+            return redirect()->intended('admin/home');
+        }
+        return view("Admin.Login")->with(['error'=> 'Tên tài khoản hoặc mật khẩu sai']);  
     }
 
 }

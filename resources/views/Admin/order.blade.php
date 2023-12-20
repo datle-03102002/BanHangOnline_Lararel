@@ -7,7 +7,6 @@
             <tr>
                 <th scope="col" class="col-1">STT</th>
                 <th scope="col" class="col-1">Mã DH</th>
-                <th scope="col" class="col-1">Tài khoản</th>
                 <th scope="col" class="col-1">Người nhận</th>
                 <th scope="col" class="col-1">Địa chỉ</th>
                 <th scope="col" class="col-1">SDT</th>
@@ -29,7 +28,6 @@
                     <span>{{$h->code_cart}}</span>
                 </td>
                 <td>{{$h->hoten}}</td>
-                <td>{{$h->hoten}}</td>
                 <td>{{$h->dc}}</td>
                 <td>{{$h->sdt}}</td>
                 <td>{{$h->thanhtoan}}</td>
@@ -49,12 +47,11 @@
                 </td>
                 <td>
                     <a class="link-offset-2 link-underline link-underline-opacity-0" 
-                    href="">Xem chi tiết</a> |
+                    href="{{route('order.detail', ['code'=>$h->code_cart])}}">Xem chi tiết</a> |
                     <a class="link-offset-2 link-underline link-underline-opacity-0" 
-                    href="">Xóa</a>
-                    <br />
+                    href="{{route('order.edit', ['code'=>$h->code_cart])}}">Sửa</a>|
                     <a class="link-offset-2 link-underline link-underline-opacity-0" 
-                    href="">In đơn hàng</a>
+                    href="{{route('order.delete', ['code'=>$h->code_cart])}}">Xóa</a>
                 </td>
             </tr>
             @endforeach
