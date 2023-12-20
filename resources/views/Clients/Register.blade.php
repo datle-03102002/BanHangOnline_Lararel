@@ -17,50 +17,54 @@
             <form action="{{ route('postregister') }}" method="post">
                 @csrf
                 <h2>Đăng ký</h2>
+                @if (session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" name="email" required>
+                    <input type="email" name="email" value="{{ old('email') }}">
                     <label for="">Email</label>
-                    @error('email.email')
-                        <span class="alert alert-danger">{{ $message }}</span>
-                    @enderror
-                    @error('email.unique')
-                        <span class="alert alert-danger">{{ $message }}</span>
-                    @enderror
-
                 </div>
+                @error('email')
+                    <span style="color: red">{{ $message }}</span>
+                @enderror
                 <div class="input-box">
                     <span class="icon"><ion-icon name="call"></ion-icon></ion-icon></span>
-                    <input type="text" name="numberphone" required>
+                    <input type="text" name="phone" value="{{ old('phone') }}">
                     <label for="">Số điện thoại</label>
                 </div>
+                @error('phone')
+                    <span style="color: red">{{ $message }}</span>
+                @enderror
                 <div class="input-box">
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" name="fullname" required>
+                    <input type="text" name="fullname" value="{{ old('fullname') }}">
                     <label for="">Tên đầy đủ</label>
-                    @error('fullname')
-                        <span class="alert alert-danger">{{ $message }}</span>
-                    @enderror
                 </div>
+                @error('fullname')
+                    <span style="color: red">{{ $message }}</span>
+                @enderror
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password">
                     <label for="">Mật khẩu</label>
-                    @error('password.min')
-                        <span class="alert alert-danger">{{ $message }}</span>
-                    @enderror
                 </div>
+                @error('password')
+                    <span style="color: red">{{ $message }}</span>
+                @enderror
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" name="repassword" required>
+                    <input type="password" name="repassword">
                     <label for="">Xác nhận mật khẩu</label>
-                    @error('re_password.same')
-                        <span class="alert alert-danger">{{ $message }}</span>
-                    @enderror
                 </div>
+                @error('repassword')
+                    <span style="color: red">{{ $message }}</span>
+                @enderror
                 <div class="input-box">
                     <span class="icon"><ion-icon name="home"></ion-icon></span>
-                    <input type="text" name="address" required>
+                    <input type="text" name="address" value="{{ old('address') }}">
                     <label for="">Địa chỉ</label>
                 </div>
                 <div class="remember-forgot">

@@ -12,4 +12,6 @@ class UserController extends Controller
         $ds = DB::table('user')->get();
         return view('Admin.user', compact('ds'));
     }
+   
+    
 }

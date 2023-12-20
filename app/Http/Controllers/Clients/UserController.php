@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
+use App\Http\Requests\RegisterRequest;
+
 use Session;
 
 class UserController extends Controller
@@ -33,35 +35,20 @@ class UserController extends Controller
     public function register(){
         return view("Clients.Register");
     }
-    public function postregister(Request $request){
-        $request->validate(
+    public function postregister(RegisterRequest $request){
+        $request->validated();
+        // dd($request);
+        DB::table('users')
+        ->insert(
             [
-                'email'       => 'required|email|unique:users,email',
-                'password'    => 'required|min:6|max:20',
-                'fullname'    => 'required',
-                're_password' => 'required|same:password',
-
-            ],
-            [
-                'email.required'       => 'Vui lòng nhập email',
-                'email.email'          => 'Email không đúng định dạng',
-                'email.unique'         => 'Email đã tồn tại',
-                'password.required'    => 'Vui lòng nhập mật khẩu',
-                'password.min'         => 'Mật khẩu ít nhất 6 kí tự',
-                're_password.required' => 'Vui lòng nhập lại mật khẩu',
-                're_password.same'     => 'Mật khẩu không trùng khớp',
+                'hoten'=>$request->fullname,
+                'sodienthoai'=>$request->phone,
+                'email'=>$request->email,
+                'matkhau'=>$request->password,
+                'diachi'=>$request->address
             ]
-        );
-        // DB::table('users')
-        // ->insert(
-        //     [
-        //         'hoten'=>$request->fullname,
-        //         'sodienthoai'=>$request->numberphone,
-        //         'email'=>$request->email,
-        //         'matkhau'=>$request->password,
-        //         'diachi'=>$request->address
-        //     ]
-        //     );
+            );
+        return redirect('/register')->with('success','Đăng ký tài khoản thành công');
         // return view("Clients.Register")->withErrors($validator)->with('custom_error', 'Đã xảy ra lỗi khác');
     }
     public function logout(){
