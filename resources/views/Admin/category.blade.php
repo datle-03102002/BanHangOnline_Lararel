@@ -5,7 +5,8 @@
         <div class="col-4">
             <h4 class="mt-3 mb-4 text-center">Quản lý hãng sản phẩm</h4>
             <h5 class="fw-normal mb-3">Thêm hãng sản phẩm:</h5>
-            <form action="{{ route('category.postadd')}}" method="POST">
+            <form action="{{ route('category.create')}}" method="POST">
+                @csrf
                 <div class="input-group input-group-sm mb-2 row">
                     <p class="fs-6 mb-0 col-4">Tên hãng</p>
                     <input type="text" class="form-control col-8" name="tenhangsp" required>
@@ -21,7 +22,8 @@
         <div class="col-4">
             <h4 class="mt-3 mb-4 text-center">Quản lý mức giá</h4>
             <h5 class="fw-normal mb-3">Thêm mức giá:</h5>
-            <form action="" method="post">
+            <form action="{{ route('category.postprice')}}" method="post">
+                @csrf
                 <div class="input-group input-group-sm mb-2 row">
                     <p class="fs-6 mb-0 col-4">Mức giá</p>
                     <input type="text" class="form-control col-8" name="mucgia" required>
@@ -52,9 +54,10 @@
                         <td> {{$hang->stt}} </td>
                         <td>
                             <a class="link-offset-2 link-underline link-underline-opacity-0 me-1"
-                                href="{{ route('category.delete', ['id' => $hang->id_hangsp]) }}">Xóa</a>|
+                                href="{{route("category.delete",["id"=>$hang->id_hangsp])}}">Xóa</a>|
+                                {{-- {{ route('category.delete', ['id' => $hang->id_hangsp]) }} --}}
                             <a class="link-offset-2 link-underline link-underline-opacity-0"
-                                href="">Sửa</a>
+                                href="{{route('category.edit', ['id'=>$hang->id_hangsp])}}">Sửa</a>
                         </td>
                     </tr>
                     @endforeach
@@ -78,9 +81,9 @@
                         <td>{{$item->mucgia}}</td>
                         <td>
                             <a class="link-offset-2 link-underline link-underline-opacity-0 me-1"
-                                href="">Xóa</a>|
+                                href="{{ route('category.deleteprice', ['id'=>$item->id_mucgia])}}">Xóa</a>|
                             <a class="link-offset-2 link-underline link-underline-opacity-0"
-                                href="">Sửa</a>
+                                href="{{route('category.editprice', ['id'=>$item->id_mucgia])}}">Sửa</a>
                         </td>
                     </tr>
                     @endforeach

@@ -2,7 +2,8 @@
 @section('dashboard')
 <div class="container">
     <h4 class="mt-3 mb-4 text-center"></h4>
-    <form action="./modules/quanlynguoidung/xuly.php" method="post" enctype="multipart/form-data">
+    <form action="{{ route('user.postcreate')}}" method="post" enctype="multipart/form-data">
+        @csrf
         <div class="row">
             <h5 class="fw-normal mb-3 fw-bold">Thêm tài khoản người dùng</h5>
             <div class="col-md-6">
@@ -58,9 +59,9 @@
                 <td>{{$u->email}}</td>
                 <td>
                     <a class="link-offset-2 link-underline link-underline-opacity-0" 
-                    href="">Sửa</a> |
+                    href="{{route('user.edit', ['id'=>$u->id_khachhang])}}">Sửa</a> |
                     <a class="link-offset-2 link-underline link-underline-opacity-0" 
-                    href="">Xóa</a>
+                    href="{{route('user.delete', ['id'=>$u->id_khachhang])}}">Xóa</a>
                 </td>
             </tr>
             @endforeach

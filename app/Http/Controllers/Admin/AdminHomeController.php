@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class AdminHomeController extends Controller
 {
     function index()
     {
@@ -32,7 +32,7 @@ class HomeController extends Controller
         //đơn hàng hôm nay
         $dh_hn = DB::table('tbl_cart')->whereDate('ngaydat', '=', date('Y-m-d'))->count();
 
-        $tk = DB::table('user')->count();
+        $tk = DB::table('users')->count();
 
         return view("admin.index", compact('slsp', 'slhsp', 'slsptong', 'spdb', 'sl_dh_xl', 'sl_dh_dg', 'dh_hn', 'sl_dh_tc', 'tk'));
     }

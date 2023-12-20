@@ -2,7 +2,8 @@
 @section('dashboard')
 <div class="container">
     <h4 class="mt-3 mb-4 text-center">Quản lý sản phẩm</h4>
-    <form action="./modules/quanlysp/xuly.php" method="post" enctype="multipart/form-data">
+    <form action="{{ route('product.postcreate')}}" method="post" enctype="multipart/form-data">
+        @csrf
         <div class="row">
             <h5 class="fw-normal mb-3 fw-bold" >Thêm sản phẩm:</h5>
                 <div class="col-md-6">                           
@@ -19,19 +20,8 @@
                         <input type="file" class="form-control col-8" required name="hinhanh">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
-                            <p class="fs-6 mb-0 col-4 fw-bold">Hãng sản phẩm</p>
-                            <select class="form-control col-8 " required name="idhangsp">
-                            {{-- <?php
-                                $sql_hang="SELECT * FROM tbl_hangsp ORDER BY id_hangsp ASC";
-                                $query_hang=mysqli_query($connect,$sql_hang);
-                                while($row_hang=mysqli_fetch_array($query_hang)){
-                            ?>  
-                            <!--dùng value thêm danh mục dựa vào địa chỉ id_danhmuc -->
-                            <option value="<?php echo $row_hang['id_hangsp']?>"><?php echo $row_hang['tenhangsp']?></option>            
-                            <?php
-                            }
-                            ?>                              --}}
-                            </select>
+                        <p class="fs-6 mb-0 col-4 fw-bold">ID Hãng sản phẩm</p>
+                        <input type="number" class="form-control col-8" required name="idhangsp">    
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Giá</p>
@@ -96,7 +86,7 @@
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Time rammat</p>
                         <input type="datetime-local" class="form-control col-8" name="timerammat">
-                    </div>              
+                    </div>             
                 </div>
         </div>
     </form>
@@ -136,8 +126,7 @@
                 <td>{{$stt++}}</td>
                 <td>{{$sp->ma_sp}}</td>
                 <td>{{$sp->ten_sp}}</td>
-                <td>{{$sp->hinhanh}}</td>
-                {{-- <td><img src="{{asset('assets/uploads/{{$sp->hinhanh}}')}}" width="150px"></td> --}}
+                <td><img src="{{asset('assets/uploads/'.$sp->hinhanh)}}" width="150px"></td>
                 <td>{{$sp->id_hangsp}}</td>
                 <td>{{$sp->gia}}</td>
                 <td>{{$sp->camera}}</td>
@@ -163,9 +152,10 @@
                 
                 <td>
                     <a class="link-offset-2 link-underline link-underline-opacity-0 me-1" 
-                    href="">Xóa</a>|
+                    href="{{route('product.delete', ['id'=>$sp->id_sp])}}">Xóa</a>|
                     <a class="link-offset-2 link-underline link-underline-opacity-0" 
-                    href="">Sửa</a>
+                    href="{{route('product.edit', ['id'=>$sp->id_sp])}}">Sửa</a>
+                    {{-- {{route('product.edit', ['id'=>$sp->id_sp])}} --}}
                 </td>
             </tr>
 
