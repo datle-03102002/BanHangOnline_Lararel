@@ -36,7 +36,8 @@ class AdminOrderController extends Controller
         $code = $request->code;
         $hang = DB::table('tbl_cart_infor')
         ->where('code_cart', '=', $code)->delete();
-        $dh = DB::table('tbl_cart')->join('users', 'tbl_cart.id_khachhang','=', 'users.id_khachhang')
+        $dh = DB::table('tbl_cart')
+        // ->join('users', 'tbl_cart.id_khachhang','=', 'users.id_khachhang')
         ->where('code_cart', '=', $code)->delete();
         return redirect()->route('order.index');
     }
