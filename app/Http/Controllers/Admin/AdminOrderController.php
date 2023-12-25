@@ -10,6 +10,7 @@ class AdminOrderController extends Controller
 {  
     public function index(){
         $ds = DB::table('tbl_cart')->join('users', 'tbl_cart.id_khachhang','=', 'users.id_khachhang')->get();
+        
         return view('Admin.order', compact('ds'));
     }
 
@@ -23,11 +24,11 @@ class AdminOrderController extends Controller
         $dh = DB::table('tbl_cart')->join('users', 'tbl_cart.id_khachhang','=', 'users.id_khachhang')
         ->where('code_cart', '=', $code)
         ->update([
-            'hoten'=>$request->hoten,
-            'sodienthoai'=>$request->sdt,
-            'diachi'=>$request->diachi,
-            'ngaynhan'=>$request->ngaynhan
+            'tennguoinhan'=>$request->hoten,
+            'sdt'=>$request->sdt,
+            'dc'=>$request->diachi,
         ]);
+        
         return redirect()->route('order.index');
     }
 

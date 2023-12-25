@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use Session;
@@ -45,11 +46,15 @@ class AdminHomeController extends Controller
         ->where("matkhau","=",$request->password)
         ->first();
         if(!empty($admin)){
-            Session::put('admin', $admin->id_admin);
+            Session::put('admin', $admin->ten);
             // dd(Session::get('user'));
             return redirect()->intended('admin/home');
         }
         return view("Admin.Login")->with(['error'=> 'Tên tài khoản hoặc mật khẩu sai']);  
+    }
+    public function logout(){
+        Session::pull('admin');
+        return redirect()->intended('admin/login');
     }
 
 }

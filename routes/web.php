@@ -66,6 +66,7 @@ Route::middleware(['clientlogin'])->group(function () {
 
 Route::get('admin/login', [AdminHomeController::class, 'login'])->name('Admin.login');
 Route::post('admin/login', [AdminHomeController::class, 'postlogin'])->name('Admin.postlogin');
+Route::get('admin/logout', [AdminHomeController::class, 'logout'])->name('Admin.logout');
 //categories
 Route::middleware(['adminLogin'])->prefix('admin/')->group(function(){
     Route::get('home', [AdminHomeController::class, 'index'])->name('home.index');

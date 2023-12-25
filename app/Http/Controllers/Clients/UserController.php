@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\RegisterRequest;
 
 
 class UserController extends Controller

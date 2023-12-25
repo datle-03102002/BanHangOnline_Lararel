@@ -40,7 +40,7 @@ class AdminProductController extends Controller
         if ($request->hasFile('hinhanh')) {
             $image = $request->file('hinhanh');
             $imageName = time() . '.' . $image->getClientOriginalName();
-            $image->move(public_path('gassets/uploads'), $imageName);
+            $image->move(public_path('assets/uploads'), $imageName);
             $imagePath = $imageName;
         }
         DB::table("tbl_sanpham")->insert([

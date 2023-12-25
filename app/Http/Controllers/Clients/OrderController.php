@@ -45,6 +45,7 @@ class OrderController extends Controller
     }
     public function postdathang(Request $request){
         $id_kh = Session::get('user');
+        $kh = DB::table('users')->where('id_khachhang','=',$id_kh)->first();
         $tenn = $request->hoten;
         $sdt = $request->sdt;
         $dc = $request->diachi;
@@ -71,8 +72,9 @@ class OrderController extends Controller
                 'sl'=>$item['soluong']
             ]);
         };
-        Mail::send('Mails.mail', compact('tenn','sdt','dc','fullDate','cart'), function ($message) {
-            $message->to('duyductc2k2@gmail.com','đạt lê');
+        Mail::send('Mails.mail', compact('tenn','sdt','dc','fullDate','cart'), function ($message) use  ($kh) {
+            $message->subject('Thông báo đặt hàng');
+            $message->to($kh->email,'Shop bán điện thoại Laravel');
         });
         Session::forget('cart');
         return redirect()->route('chitietdh',['id'=>$code_cart])->with('thongbao','Đã đặt hàng');

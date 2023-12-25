@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="wraper register">
+    <div class="wraper register" style="height: auto">
         <div class="form-box register">
             <form action="{{ route('postregister') }}" method="post">
                 @csrf

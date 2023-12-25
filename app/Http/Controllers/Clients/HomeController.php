@@ -75,7 +75,7 @@ class HomeController extends Controller
         ->where("ten_sp","like",'%'.$search.'%')
         // ->get();
         ->paginate(20);
-        // $count = $productList->count();
+        $count = $productList->count();
         // dd($productList);
         return view("Clients.search",compact('search','count','productList','cart_quantity'));
     }
