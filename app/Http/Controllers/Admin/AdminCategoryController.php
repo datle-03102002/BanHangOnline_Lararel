@@ -29,10 +29,8 @@ class AdminCategoryController extends Controller
     }
     public function postCreate(Request $request){
         $ten = $request->tenhangsp;
-        $stt = $request->thutusp;
         DB::table('tbl_hangsp')->insert([
             'tenhangsp' => $ten,
-            'stt' => $stt,
         ]);
         
         $ds = DB::table('tbl_hangsp')->get();
@@ -61,7 +59,6 @@ class AdminCategoryController extends Controller
         $h = DB::table('tbl_hangsp')->where('id_hangsp', '=', $id)
         ->update([
             'tenhangsp'=>$request->tenhangsp,
-            'stt'=>$request->thutusp
         ]);
         return redirect()->route('category.index');
     }

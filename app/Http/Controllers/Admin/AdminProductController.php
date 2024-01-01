@@ -10,7 +10,8 @@ class AdminProductController extends Controller
 {  
     public function index(){
         $ds = DB::table('tbl_sanpham')->orderBy('id_sp', $direction = 'desc')->paginate(15);
-        return view('Admin.product', compact('ds'));
+        $hang = DB::table('tbl_hangsp')->get();
+        return view('Admin.product', compact('ds','hang'));
     }
 
     public function create(){

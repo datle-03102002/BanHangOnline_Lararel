@@ -106,5 +106,6 @@ Route::middleware(['adminLogin'])->prefix('admin/')->group(function(){
     Route::post('order/postedit/{code}', [AdminOrderController::class,"postedit"])->name('order.postedit');
     Route::get('order/delete/{code}', [AdminOrderController::class, 'delete'])->name('order.delete');
     Route::get('detailorder/{code}', [AdminOrderController::class,"detail"])->name('order.detail');
+    Route::get('xacnhandonhang/{code}', [AdminOrderController::class,"xacnhandon"])->name('order.xacnhandonhang');
 });
 

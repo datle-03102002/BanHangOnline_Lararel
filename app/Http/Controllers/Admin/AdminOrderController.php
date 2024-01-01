@@ -34,7 +34,7 @@ class AdminOrderController extends Controller
 
     public function delete(Request $request){
         $code = $request->code;
-        $hang = DB::table('tbl_cart_infor')
+        $hang = DB::table('tbl_cart_info')
         ->where('code_cart', '=', $code)->delete();
         $dh = DB::table('tbl_cart')
         // ->join('users', 'tbl_cart.id_khachhang','=', 'users.id_khachhang')
@@ -49,5 +49,14 @@ class AdminOrderController extends Controller
         ->where('code_cart', '=', $code)->get();
         $tong = 0;
         return view('Admin.detailorder', compact('dh','ds', 'tong'));
+    }
+    public function xacnhandon($code){
+        $dh = DB::table('tbl_cart')
+        ->where('code_cart', '=', $code)
+        ->update([
+            'trangthai'=>2
+        ]);
+        return redirect()->route('order.index');
+
     }
 }

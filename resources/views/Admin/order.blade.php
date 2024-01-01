@@ -37,8 +37,8 @@
 
                             @if ($h->trangthai == 1)
                                 <p class="text-danger">Chờ xác nhận</p>
-                                <a class="link-offset-2 link-underline link-underline-opacity-0">
-                                    {{-- href="{{ route('order.xacnhandonhang', []) }}"> --}}
+                                <a class="link-offset-2 link-underline link-underline-opacity-0"
+                                    href="{{ route('order.xacnhandonhang', ['code' => $h->code_cart]) }}">
                                     (Giao hàng)
                                 </a>
                             @elseif ($h->trangthai == 2)
